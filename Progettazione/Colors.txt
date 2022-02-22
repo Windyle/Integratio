@@ -1,0 +1,7 @@
+Text: #f4f5ff
+Input Color: #85a0ec
+Primary: #476fde
+Secondary: #254797
+Darker-Secondary: #1e3f8d
+Input Background: #0e2e78
+Background: #0d0e1a
