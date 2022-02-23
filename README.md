@@ -13,6 +13,16 @@ First of all is a faster way to look at your entities' structures and make rando
 todo
 ```
 
+## Setup for Contributors
+
+1. Fork the repository
+
+2. Go inside the root folder of the project and run: `npm install`
+
+3. To run the application: `npm run dev -- --open`.<br>This will open a new tab in your browser pointing at localhost:3000
+
+> SvelteKit uses Vite with Hot Module Replacement, where changes to your code are reflected in the browser instantly.
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
