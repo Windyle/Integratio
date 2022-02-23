@@ -26,6 +26,8 @@ todo
 
 3. To run the application: `npm run dev -- --open`.<br>This will open a new tab in your browser pointing at localhost:3000
 
+4. Add your features and send a Pull Request
+
 > SvelteKit uses Vite with Hot Module Replacement, where changes to your code are reflected in the browser instantly.
 
 ## Contributing
