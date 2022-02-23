@@ -38,7 +38,7 @@ Please make sure to update tests as appropriate.
 
 ## Authors and acknowledgment
 
-Alberto Denti.
+- Alberto Denti
 
 ## License
 
