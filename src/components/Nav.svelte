@@ -14,7 +14,7 @@
 <style>
 	nav {
 		background-color: var(--secondary);
-		width: 350px;
+		width: 420px;
 		height: 100%;
 		position: fixed;
 		top: 35px;

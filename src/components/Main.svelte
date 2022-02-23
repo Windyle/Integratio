@@ -7,7 +7,7 @@
 		height: 100%;
 		position: fixed;
 		top: 35px;
-		left: 350px;
+		left: 420px;
 		z-index: 1;
 	}
 </style>
