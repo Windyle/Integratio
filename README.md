@@ -5,6 +5,11 @@
 Integratio is a utility application for Creatio developers.
 First of all is a faster way to look at your entities' structures and make random bodies for integration testing.
 
+## Changelog
+
+You can find the changelog [here](https://github.com/Windyle/Integratio/blob/main/CHANGELOG.md).
+We don't have a proper roadmap but we'll write what we're working on in the Unreleased section of the changelog.
+
 ## Installation
 
 -- To Do
