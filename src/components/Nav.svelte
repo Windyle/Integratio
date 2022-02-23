@@ -17,7 +17,7 @@
 		width: 350px;
 		height: 100%;
 		position: fixed;
-		top: 46px;
+		top: 35px;
 		left: 0;
 		z-index: 1;
 		display: flex;

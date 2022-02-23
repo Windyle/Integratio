@@ -1,5 +1,5 @@
 <header>
-	<img alt="Logo" class="logo" src="../../static/icon.svg" />
+	<img alt="Logo" class="logo" src="../../static/icon-borderless.svg" />
 	<h1>INTEGRATIO</h1>
 	<img alt="Help Button" class="help" src="../../static/help-circle.svg" />
 </header>
@@ -7,7 +7,7 @@
 <style>
 	header {
 		background-color: var(--primary);
-		height: 46px;
+		height: 35px;
 		width: 100%;
 		position: fixed;
 		top: 0;
@@ -18,8 +18,8 @@
 	}
 
 	.logo {
-		width: 36px;
-		margin-left: 11px;
+		width: 28px;
+		margin-left: 15px;
 		user-select: none;
 		-webkit-user-drag: none;
 	}
@@ -29,9 +29,10 @@
 		color: var(--text);
 		font-family: var(--font-family);
 		font-weight: 400;
-		font-size: 1.5em;
+		font-size: 1em;
 		user-select: none;
 		-webkit-user-drag: none;
+		opacity: 0.8;
 	}
 
 	.help {
