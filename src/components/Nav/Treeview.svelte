@@ -1,19 +1,28 @@
 <script lang="ts">
+	// Import components
 	import NewInstance from "./NewInstance.svelte";
 	import Search from "./Search.svelte";
 
-	import { hideSearch } from "../../stores/Nav.js";
-	let hideSearchAttr: boolean;
+	// Import Search Store
+	import { hideSearch } from "../../stores/NavStore.js";
+	let boolHideSearch: boolean;
 
 	hideSearch.subscribe(value => {
-		hideSearchAttr = value;
+		boolHideSearch = value;
 	});
 	
 	function toggleSearch() {
-		hideSearch.set(!hideSearchAttr);
+		hideSearch.set(!boolHideSearch);
 	}
 
+	// Import Current Instance Store
+	import { currentInstance } from "../../stores/InstanceStore.js";
+	
+	function updateCurrentInstance(instance: string) {
+		currentInstance.set(instance);
+	}
 
+	// Interfaces
 	interface Method {
 		id: string;
 		text: string;
@@ -32,6 +41,7 @@
 		entities: Entity[];
 	}
 
+	// Current attributes
 	let hideNewInstance = true;
 
 	let instances: Instance[] = [
@@ -122,13 +132,13 @@
 		<div class="search" on:click={toggleSearch} />
 		<div class="new" on:click={() => hideNewInstance = !hideNewInstance} />
 
-		<div class:hide={hideSearchAttr}>
+		<div class:hide={boolHideSearch}>
 			<Search />
 		</div>
 	</div>
 	<div class="content">
 		{#each instances as instance}
-			<div class="root" id={instance.id}>
+			<div class="root" id={instance.id} on:click={() => updateCurrentInstance(instance.text)}>
 				<div class="text-container" on:click={() => (instance.expanded = !instance.expanded)}>
 					<div class="chevron" class:expanded={instance.expanded} />
 					<p>{instance.text}</p>

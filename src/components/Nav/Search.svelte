@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { hideSearch } from "../../stores/Nav.js";
+    import { hideSearch } from "../../stores/NavStore.js";
     let hideSearchAttr: boolean;
 
 	hideSearch.subscribe(value => {

@@ -1,7 +1,17 @@
+<script lang="ts">
+	import { currentInstance } from "../stores/InstanceStore.js";
+
+	let instance: string;
+	currentInstance.subscribe(value => {
+		instance = value;
+	});
+</script>
+
 <header>
 	<img alt="Logo" class="logo" src="../../static/icon-borderless.svg" />
 	<h1>INTEGRATIO</h1>
-	<img alt="Help Button" class="help" src="../../static/help-circle.svg" />
+	<h2>{instance}</h2>
+	<img alt="Help Button" class="help" src="../../static/help-circle.svg" on:click={() => window.open('https://github.com/Windyle/Integratio/issues', '_blank').focus()} />
 </header>
 
 <style>
@@ -33,6 +43,17 @@
 		user-select: none;
 		-webkit-user-drag: none;
 		opacity: 0.8;
+	}
+
+	h2 {
+		margin-left: 10px;
+		color: var(--input-text);
+		font-family: var(--font-family);
+		font-weight: 400;
+		font-size: 0.9em;
+		user-select: none;
+		-webkit-user-drag: none;
+		transform: translateY(-1px);
 	}
 
 	.help {
