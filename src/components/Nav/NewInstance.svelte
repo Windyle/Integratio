@@ -1,7 +1,38 @@
+<script lang="ts">
+
+    let filepath: string;
+    let instanceName: string;
+
+    // function loadInstanceStructure() {
+        
+
+    //     const instanceStructure = fs.readFileSync('./instance-structure.json', 'utf8');
+    //     return JSON.parse(instanceStructure);
+    // }
+
+    // function validateFilePath(filepath: string) {
+    //     filepath = filepath.replace(/\\/g, '/');
+
+    //     if (!filepath) {
+    //         throw new Error('Filepath is required');
+    //     }
+
+    //     if (!fs.existsSync(filepath)) {
+    //         throw new Error('Filepath does not exist');
+    //     }
+
+    //     if (!fs.existsSync(filepath + '/Terrasoft.WebApp')) {
+    //         throw new Error('Filepath does not exist');
+    //     }
+
+        
+    // }
+</script>
+
 <div class="overlay"></div>
 <div class="container">
-    <input type="text" id="instance-name" placeholder="Instance Name">
-    <input type="text" id="instance-path" placeholder="Instance Root Folder Path">
+    <input bind:value={instanceName} type="text" id="instance-name" placeholder="Instance Name">
+    <input bind:value={filepath} type="text" id="instance-path" placeholder="Instance Root Folder Path">
     <button type="button" id="add-instance">Add Instance</button>
 </div>
 <div class="tail"></div>

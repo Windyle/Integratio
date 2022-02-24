@@ -34,11 +34,18 @@
 		methods: Method[];
 	}
 
-	interface Instance {
+	interface Package {
 		id: string;
 		text: string;
 		expanded: boolean;
 		entities: Entity[];
+	}
+
+	interface Instance {
+		id: string;
+		text: string;
+		expanded: boolean;
+		packages: Package[];
 	}
 
 	// Current attributes
@@ -49,70 +56,77 @@
 			id: 'testaccount',
 			text: 'Account Test',
 			expanded: false,
-			entities: [
+			packages: [
 				{
-					id: 'Account',
+					id: "tst",
+					text: "Tst",
 					expanded: false,
-					methods: [
+					entities: [
 						{
-							id: 'getaccount',
-							text: 'GET'
+							id: 'Account',
+							expanded: false,
+							methods: [
+								{
+									id: 'getaccount',
+									text: 'GET'
+								},
+								{
+									id: 'postaccount',
+									text: 'POST'
+								},
+								{
+									id: 'patchaccount',
+									text: 'PATCH'
+								},
+								{
+									id: 'deleteaccount',
+									text: 'DELETE'
+								}
+							]
 						},
 						{
-							id: 'postaccount',
-							text: 'POST'
+							id: 'tstDetailDiscounts',
+							expanded: false,
+							methods: [
+								{
+									id: 'getaccount',
+									text: 'GET'
+								},
+								{
+									id: 'postaccount',
+									text: 'POST'
+								},
+								{
+									id: 'patchaccount',
+									text: 'PATCH'
+								},
+								{
+									id: 'deleteaccount',
+									text: 'DELETE'
+								}
+							]
 						},
 						{
-							id: 'patchaccount',
-							text: 'PATCH'
-						},
-						{
-							id: 'deleteaccount',
-							text: 'DELETE'
-						}
-					]
-				},
-				{
-					id: 'tstDetailDiscounts',
-					expanded: false,
-					methods: [
-						{
-							id: 'getaccount',
-							text: 'GET'
-						},
-						{
-							id: 'postaccount',
-							text: 'POST'
-						},
-						{
-							id: 'patchaccount',
-							text: 'PATCH'
-						},
-						{
-							id: 'deleteaccount',
-							text: 'DELETE'
-						}
-					]
-				},
-				{
-					id: 'tstDetailAccountBillingInfo',
-					expanded: false,
-					methods: [
-						{
-							id: 'getaccount',
-							text: 'GET'
-						},
-						{
-							id: 'postaccount',
-							text: 'POST'
-						},
-						{
-							id: 'patchaccount',
-							text: 'PATCH'
-						},
-						{
-							id: 'deleteaccount',
-							text: 'DELETE'
+							id: 'tstDetailAccountBillingInfo',
+							expanded: false,
+							methods: [
+								{
+									id: 'getaccount',
+									text: 'GET'
+								},
+								{
+									id: 'postaccount',
+									text: 'POST'
+								},
+								{
+									id: 'patchaccount',
+									text: 'PATCH'
+								},
+								{
+									id: 'deleteaccount',
+									text: 'DELETE'
+								}
+							]
 						}
 					]
 				}
@@ -144,21 +158,31 @@
 					<p>{instance.text}</p>
 				</div>
 				{#if instance.expanded}
-					{#each instance.entities as entity}
-						<div
-							class="entity"
-							id={entity.id}
-							on:click={() => (entity.expanded = !entity.expanded)}
-						>
-							<div class="text-container">
-								<div class="chevron" class:expanded={entity.expanded} />
-								<p>{entity.id}</p>
+					{#each instance.packages as inst_package}
+						<div class="package" id={inst_package.id}>
+							<div class="text-container" on:click={() => (inst_package.expanded = !inst_package.expanded)}>
+								<div class="chevron" class:expanded={inst_package.expanded} />
+								<p>{inst_package.id}</p>
 							</div>
-							{#if entity.expanded}
-								{#each entity.methods as method}
-									<div class="method" id={method.id}>
-										<div class="circle" />
-										<p class={method.text.toLowerCase()}>{method.text}</p>
+							{#if inst_package.expanded}
+								{#each inst_package.entities as entity}
+									<div
+										class="entity"
+										id={entity.id}
+										on:click={() => (entity.expanded = !entity.expanded)}
+									>
+										<div class="text-container">
+											<div class="chevron" class:expanded={entity.expanded} />
+											<p>{entity.id}</p>
+										</div>
+										{#if entity.expanded}
+											{#each entity.methods as method}
+												<div class="method" id={method.id}>
+													<div class="circle" />
+													<p class={method.text.toLowerCase()}>{method.text}</p>
+												</div>
+											{/each}
+										{/if}
 									</div>
 								{/each}
 							{/if}
@@ -274,6 +298,16 @@
 	.text-container p {
 		transform: translateY(-1px);
 		user-select: none;
+	}
+
+	/* Package */
+	.package {
+		margin-left: 24px;
+		margin-top: 5px;
+	}
+
+	.package > .text-container:hover > p {
+		opacity: 0.6;
 	}
 
 	/* Entity */
