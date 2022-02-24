@@ -1,6 +1,6 @@
 # Integratio
 
-[![ReleaseVersion](https://img.shields.io/badge/Latest Release-WIP-lightgrey)]() [![DevVersion](https://img.shields.io/badge/Dev Version-0.0.1-blue)]() [![License](https://img.shields.io/badge/License-MIT-blue)]() [![SvelteKit](https://img.shields.io/badge/SvelteKit-next-blue)]() [![Typescript](https://img.shields.io/badge/Typescript-4.5.X-blue)]() [![Tests](https://img.shields.io/badge/Tests-None-lightgrey)]()
+[![ReleaseVersion](https://img.shields.io/badge/Latest%20Release-WIP-lightgrey)]() [![DevVersion](https://img.shields.io/badge/Dev%20Version-0.0.1-blue)]() [![License](https://img.shields.io/badge/License-MIT-blue)]() [![SvelteKit](https://img.shields.io/badge/SvelteKit-next-blue)]() [![Typescript](https://img.shields.io/badge/Typescript-4.5.X-blue)]() [![Tests](https://img.shields.io/badge/Tests-None-lightgrey)]()
 
 Integratio is a utility application for [Creatio](https://www.creatio.com/it) developers.
 First of all is a faster way to look at your entities' structures and make random bodies for integration testing.
