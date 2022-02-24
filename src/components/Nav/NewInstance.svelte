@@ -1,11 +1,12 @@
 <script lang="ts">
+    import { getInstance } from '../../services/InstanceService';
 
-    let filepath: string;
-    let instanceName: string;
+    let filepath;
+    let instanceName;
 
-    // function loadInstanceStructure() {
+    function loadInstanceStructure() {
         
-
+        console.log(getInstance);
     //     const instanceStructure = fs.readFileSync('./instance-structure.json', 'utf8');
     //     return JSON.parse(instanceStructure);
     // }
@@ -26,14 +27,14 @@
     //     }
 
         
-    // }
+    }
 </script>
 
 <div class="overlay"></div>
 <div class="container">
     <input bind:value={instanceName} type="text" id="instance-name" placeholder="Instance Name">
     <input bind:value={filepath} type="text" id="instance-path" placeholder="Instance Root Folder Path">
-    <button type="button" id="add-instance">Add Instance</button>
+    <button on:click={getInstance} type="button" id="add-instance">Add Instance</button>
 </div>
 <div class="tail"></div>
 
