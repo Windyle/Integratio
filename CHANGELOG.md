@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Defined the Layout of the application
 - Creatio Instance Management
 - Instance treeview generation
+- Package Sync
+- Random Body Filler
 
 ### Changed
 
