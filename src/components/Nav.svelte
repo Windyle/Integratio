@@ -19,7 +19,7 @@
 		position: fixed;
 		top: 35px;
 		left: 0;
-		z-index: 1;
+		z-index: 2;
 		display: flex;
 		flex-direction: column;
 		align-items: center;

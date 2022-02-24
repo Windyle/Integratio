@@ -1,4 +1,19 @@
 <script lang="ts">
+	import NewInstance from "./NewInstance.svelte";
+	import Search from "./Search.svelte";
+
+	import { hideSearch } from "../../stores/Nav.js";
+	let hideSearchAttr: boolean;
+
+	hideSearch.subscribe(value => {
+		hideSearchAttr = value;
+	});
+	
+	function toggleSearch() {
+		hideSearch.set(!hideSearchAttr);
+	}
+
+
 	interface Method {
 		id: string;
 		text: string;
@@ -16,6 +31,8 @@
 		expanded: boolean;
 		entities: Entity[];
 	}
+
+	let hideNewInstance = true;
 
 	let instances: Instance[] = [
 		{
@@ -94,11 +111,20 @@
 	];
 </script>
 
+<div class:hide={hideNewInstance}>
+	<NewInstance />
+</div>
+
+
 <div class="container">
 	<div class="header">
-		<p>AMBIENTI</p>
-		<div class="search" />
-		<div class="new" />
+		<p>INSTANCES</p>
+		<div class="search" on:click={toggleSearch} />
+		<div class="new" on:click={() => hideNewInstance = !hideNewInstance} />
+
+		<div class:hide={hideSearchAttr}>
+			<Search />
+		</div>
 	</div>
 	<div class="content">
 		{#each instances as instance}
@@ -146,7 +172,7 @@
 	/* Header */
 	.header {
 		width: 100%;
-		height: 10%;
+		height: 40px;
 		display: flex;
 		align-items: center;
 		font-family: var(--font-family);
@@ -181,6 +207,7 @@
 		background-size: cover;
 		margin-right: 10px;
 		margin-left: 5px;
+		z-index: 7;
 	}
 
 	.header div.new:hover {
@@ -305,5 +332,10 @@
 		background-size: cover;
 		margin-right: 6px;
 		transform: translateY(1px);
+	}
+
+	/* Utility */
+	.hide {
+		display: none;
 	}
 </style>

@@ -15,7 +15,7 @@
         --primary: #476fde;
         --secondary: #254797;
         --darker-secondary: #1e3f8d;
-        --input-background: #0e2e78;
+        --input-background: #183474;
         --background: #0d0e1a;
         --font-family: "Segoe UI", Arial, sans-serif;
     }
