@@ -1,6 +1,6 @@
 # Integratio
 
-[![ReleaseVersion](https://img.shields.io/badge/Latest%20Release-WIP-lightgrey)]() [![DevVersion](https://img.shields.io/badge/Dev%20Version-0.0.1-blue)]() [![License](https://img.shields.io/badge/License-MIT-blue)]() [![SvelteKit](https://img.shields.io/badge/SvelteKit-next-blue)]() [![Typescript](https://img.shields.io/badge/Typescript-4.5.X-blue)]() [![Tests](https://img.shields.io/badge/Tests-None-lightgrey)]()
+[![ReleaseVersion](https://img.shields.io/badge/Latest%20Release-WIP-lightgrey)]() [![DevVersion](https://img.shields.io/badge/Dev%20Version-0.0.1-blue)]() [![License](https://img.shields.io/badge/License-MIT-blue)]() [![SvelteKit](https://img.shields.io/badge/Svelte-3.X-blue)]() [![Typescript](https://img.shields.io/badge/Typescript-4.X-blue)]() [![Electron](https://img.shields.io/badge/Electron-17.X-blue)]() [![Tests](https://img.shields.io/badge/Tests-None-lightgrey)]()
 
 Integratio is a utility application for [Creatio](https://www.creatio.com/it) developers.
 First of all is a faster way to look at your entities' structures and make random bodies for integration testing.
@@ -20,11 +20,12 @@ Waiting for the first release.
 
 2. Go inside the root folder of the project and run: `npm install`
 
-3. To run the application: `npm run dev -- --open`.<br>This will open a new tab in your browser pointing at localhost:3000
+3. To run the application: `npm run dev`
 
 4. Add your features and send a Pull Request
 
-> SvelteKit uses Vite with Hot Module Replacement, where changes to your code are reflected in the browser instantly.
+> - Rollup automatically update your svelte components, press f5 to refresh the program UI.
+> - To open the Inspector press _CTRL + I_
 
 ## Contributing
 
