@@ -5,6 +5,8 @@
 Integratio is a utility application for [Creatio](https://www.creatio.com/it) developers.
 First of all is a faster way to look at your entities' structures and make random bodies for integration testing.
 
+Made with electron & Svelte.
+
 ## Changelog
 
 You can find the changelog [here](https://github.com/Windyle/Integratio/blob/main/CHANGELOG.md).
