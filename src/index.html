@@ -1,0 +1,102 @@
+<html !doctype="html">
+  <head>
+    <meta charset="utf-8" />
+    <title>Integratio</title>
+    <link href="../static/icon-borderless.png" rel="icon" type="image/png" />
+
+    <!-- Root Stylesheet -->
+    <link href="./lib/css/Root.css" rel="stylesheet" />
+    <!-- Header Stylesheet -->
+    <link href="./lib/css/Header.css" rel="stylesheet" />
+    <!-- Nav Stylesheets -->
+    <link href="./lib/css/Nav.css" rel="stylesheet" />
+    <link href="./lib/css/Nav_Actions.css" rel="stylesheet" />
+    <link href="./lib/css/Nav_Treeview.css" rel="stylesheet" />
+    <link href="./lib/css/Nav_Search.css" rel="stylesheet" />
+    <!-- Main Stylesheets -->
+    <link href="./lib/css/Main.css" rel="stylesheet" />
+    <!-- Modals Stylesheet -->
+    <link href="./lib/css/Modal.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Header Section-->
+    <header>
+      <img alt="Logo" class="logo" src="../static/icon-borderless.svg" />
+      <!-- Instance Display - Top Left Corner -->
+      <h2 class="header" id="instance-display">[No Instance Selected]</h2>
+      <!-- Help Button - Top Right Corner -->
+      <img
+        alt="Help Button"
+        class="help"
+        src="../static/help-circle.svg"
+        onclick="window.open('https://github.com/Windyle/Integratio/issues', '_blank').focus()"
+      />
+    </header>
+
+    <!-- Nav Section -->
+    <nav>
+      <!-- Treeview Sub-Section -->
+      <div id="treeview">
+        <!-- Treeview Header -->
+        <div class="header">
+          <p>INSTANCES</p>
+          <div class="search" onclick="showSearchBar()"></div>
+          <div class="new" onclick="showNewInstanceModal()"></div>
+
+          <!-- Search Bar -->
+          <div id="search-container">
+            <input
+              type="text"
+              id="search"
+              placeholder="Search..."
+              autocomplete="off"
+            />
+            <div class="close-search" onclick="showSearchBar()">
+              <img alt="close-search" src="../static/x.svg" />
+            </div>
+          </div>
+        </div>
+        <!-- Treeview Content -->
+        <div class="content"></div>
+      </div>
+
+      <hr class="nav" />
+
+      <!-- Actions Sub-Section -->
+      <div id="actions"></div>
+    </nav>
+
+    <!-- Main Section -->
+    <main></main>
+
+    <!-- New Instance Modal -->
+    <div id="overlay"></div>
+    <div id="new-instance-modal" class="modal">
+      <div class="modal-header">
+        <h2>NEW INSTANCE</h2>
+        <span class="close" onclick="showNewInstanceModal()"></span>
+      </div>
+      <div class="modal-body">
+        <div class="input-container">
+          <label for="new-instance-name">Instance Name</label>
+          <input type="text" id="new-instance-name" />
+        </div>
+        <div class="input-container">
+          <label for="new-instance-url">Instance URL</label>
+          <input type="text" id="new-instance-url" />
+        </div>
+        <button class="btn" onclick="loadPackages()">Load Packages</button>
+        <div class="input-container">
+          <label for="new-instance-packages">Packages</label>
+          <select id="new-instance-packages" multiple></select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="createInstance()">Create</button>
+      </div>
+    </div>
+
+    <script src="./lib/js/_globals.js"></script>
+    <script src="./lib/js/Nav.js"></script>
+  </body>
+</html>

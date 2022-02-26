@@ -1,9 +1,11 @@
-# Integratio
+![Readme Image](https://github.com/Windyle/Integratio/blob/development/static/readme-image.png?raw=true)
 
-[![ReleaseVersion](https://img.shields.io/badge/Latest%20Release-WIP-lightgrey)]() [![DevVersion](https://img.shields.io/badge/Dev%20Version-0.0.1-blue)]() [![License](https://img.shields.io/badge/License-MIT-blue)]() [![SvelteKit](https://img.shields.io/badge/Svelte-3.X-blue)]() [![Typescript](https://img.shields.io/badge/Typescript-4.X-blue)]() [![Electron](https://img.shields.io/badge/Electron-17.X-blue)]() [![Tests](https://img.shields.io/badge/Tests-None-lightgrey)]()
+[![ReleaseVersion](https://img.shields.io/badge/Latest%20Release-WIP-lightgrey)]() [![DevVersion](https://img.shields.io/badge/Dev%20Version-0.0.1-blue)]() [![License](https://img.shields.io/badge/License-MIT-blue)]() [![Electron](https://img.shields.io/badge/Electron-17.X-blue)]() [![Tests](https://img.shields.io/badge/Tests-None-lightgrey)]()
 
 Integratio is a utility application for [Creatio](https://www.creatio.com/it) developers.
 First of all is a faster way to look at your entities' structures and make random bodies for integration testing.
+
+Made with Electron & Svelte.
 
 ## Changelog
 
@@ -24,8 +26,8 @@ Waiting for the first release.
 
 4. Add your features and send a Pull Request
 
-> - Rollup automatically update your svelte components, press f5 to refresh the program UI.
-> - To open the Inspector press _CTRL + I_
+> - Rollup automatically update your svelte components, press f5 to refresh the program front-end.
+> - To open the Inspector press _ctrl + i_
 
 ## Contributing
 
