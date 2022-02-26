@@ -1,4 +1,8 @@
-/node_modules/
-/public/build/
+#directories
+bower_components
+node_modules
+dist
 
-.DS_Store
+#files
+*.tgz
+*.log
