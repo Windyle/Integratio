@@ -1,4 +1,4 @@
-[Readme Image](https://github.com/Windyle/Integratio/blob/main/static/readme-image.png?raw=true)
+![Readme Image](https://github.com/Windyle/Integratio/blob/development/static/readme-image.png?raw=true)
 
 [![ReleaseVersion](https://img.shields.io/badge/Latest%20Release-WIP-lightgrey)]() [![DevVersion](https://img.shields.io/badge/Dev%20Version-0.0.1-blue)]() [![License](https://img.shields.io/badge/License-MIT-blue)]() [![Electron](https://img.shields.io/badge/Electron-17.X-blue)]() [![Tests](https://img.shields.io/badge/Tests-None-lightgrey)]()
 
