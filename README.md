@@ -26,7 +26,7 @@ Waiting for the first release.
 
 4. Add your features and send a Pull Request
 
-> - Rollup automatically update your svelte components, press f5 to refresh the program front-end.
+> - Electron-reloader automatically reloads the application when you save a file.
 > - To open the Inspector press _ctrl + shift + i_
 
 ## Contributing
