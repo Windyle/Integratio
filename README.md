@@ -27,7 +27,7 @@ Waiting for the first release.
 4. Add your features and send a Pull Request
 
 > - Rollup automatically update your svelte components, press f5 to refresh the program front-end.
-> - To open the Inspector press _ctrl + i_
+> - To open the Inspector press _ctrl + shift + i_
 
 ## Contributing
 
