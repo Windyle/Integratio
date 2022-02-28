@@ -1,3 +1,5 @@
+"use strict";
+
 let service_fs = require("./lib/js/Service_FileSystem");
 let service_instances = require("./lib/js/Service_Instances");
 
@@ -79,37 +81,37 @@ function loadTreeView(instances) {
 
     document.getElementById("treeview-content").innerHTML += instanceNode;
 
-    instance.packages.forEach((package) => {
-      let packageNode = `<div id="${instance.id}${package.id}" class="package hide">
+    instance.packages.forEach((current_package) => {
+      let packageNode = `<div id="${instance.id}${current_package.id}" class="package hide">
           <div class="text-container" onclick="expand(event)">
             <div class="chevron"></div>
-            <p>${package.text}</p>
+            <p>${current_package.text}</p>
           </div>
         </div>`;
 
       document.getElementById(instance.id).innerHTML += packageNode;
 
-      package.entities.forEach((entity) => {
-        let entityNode = `<div id="${instance.id}${package.id}${entity.id}" class="entity hide">
+      current_package.entities.forEach((entity) => {
+        let entityNode = `<div id="${instance.id}${current_package.id}${entity.id}" class="entity hide">
             <div class="text-container" onclick="expand(event)">
               <div class="chevron"></div>
               <p>${entity.id}</p>
             </div>
           </div>`;
 
-        document.getElementById(instance.id + package.id).innerHTML +=
+        document.getElementById(instance.id + current_package.id).innerHTML +=
           entityNode;
 
         entity.methods.forEach((method) => {
-          let methodNode = `<div id="${instance.id}${package.id}${entity.id}${
-            method.id
-          }" class="method hide">
+          let methodNode = `<div id="${instance.id}${current_package.id}${
+            entity.id
+          }${method.id}" class="method hide">
               <div class="circle"></div>
               <p class=${method.text.toLowerCase()}>${method.text}</p>
             </div>`;
 
           document.getElementById(
-            instance.id + package.id + entity.id
+            instance.id + current_package.id + entity.id
           ).innerHTML += methodNode;
         });
       });
