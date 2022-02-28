@@ -157,4 +157,6 @@ function addNewInstance() {
   loadTreeView(
     service_instances.addInstanceToList(instanceName, pkgPath, pkgList)
   );
+
+  showNewInstanceModal();
 }
