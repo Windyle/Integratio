@@ -57,7 +57,7 @@
           </div>
         </div>
         <!-- Treeview Content -->
-        <div class="content"></div>
+        <div class="content" id="treeview-content"></div>
       </div>
 
       <hr class="nav" />
@@ -85,14 +85,9 @@
           <label for="new-instance-url">Instance URL</label>
           <input type="text" id="new-instance-url" />
         </div>
-        <button class="btn" onclick="loadPackages()">Load Packages</button>
-        <div class="input-container">
-          <label for="new-instance-packages">Packages</label>
-          <select id="new-instance-packages" multiple></select>
-        </div>
       </div>
       <div class="modal-footer">
-        <button class="btn" onclick="createInstance()">Create</button>
+        <button class="btn" onclick="addNewInstance()">Create</button>
       </div>
     </div>
 

@@ -1,3 +1,6 @@
+let service_fs = require("./lib/js/Service_FileSystem");
+let service_instances = require("./lib/js/Service_Instances");
+
 /**
  * Action Buttons Declaration
  */
@@ -37,90 +40,8 @@ function init() {
   document.getElementById("overlay").style.display = "none";
 
   // Initialize Tree View
-  let instances = [
-    {
-      id: "testaccount",
-      text: "Account Test",
-      expanded: false,
-      packages: [
-        {
-          id: "tst",
-          text: "Tst",
-          expanded: false,
-          entities: [
-            {
-              id: "Account",
-              expanded: false,
-              methods: [
-                {
-                  id: "getaccount",
-                  text: "GET",
-                },
-                {
-                  id: "postaccount",
-                  text: "POST",
-                },
-                {
-                  id: "patchaccount",
-                  text: "PATCH",
-                },
-                {
-                  id: "deleteaccount",
-                  text: "DELETE",
-                },
-              ],
-            },
-            {
-              id: "tstDetailDiscounts",
-              expanded: false,
-              methods: [
-                {
-                  id: "getaccount",
-                  text: "GET",
-                },
-                {
-                  id: "postaccount",
-                  text: "POST",
-                },
-                {
-                  id: "patchaccount",
-                  text: "PATCH",
-                },
-                {
-                  id: "deleteaccount",
-                  text: "DELETE",
-                },
-              ],
-            },
-            {
-              id: "tstDetailAccountBillingInfo",
-              expanded: false,
-              methods: [
-                {
-                  id: "getaccount",
-                  text: "GET",
-                },
-                {
-                  id: "postaccount",
-                  text: "POST",
-                },
-                {
-                  id: "patchaccount",
-                  text: "PATCH",
-                },
-                {
-                  id: "deleteaccount",
-                  text: "DELETE",
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ];
 
-  loadTreeView(instances);
+  loadTreeView(service_instances.getInstancesList());
 }
 
 // Function: Show / Hide Search Bar
@@ -146,7 +67,7 @@ function showNewInstanceModal() {
 // Function: Load Tree View
 function loadTreeView(instances) {
   console.info("- Load Tree View");
-  document.getElementById("treeview").innerHTML = "";
+  document.getElementById("treeview-content").innerHTML = "";
 
   instances.forEach((instance) => {
     let instanceNode = `<div id="${instance.id}" class="root">
@@ -156,35 +77,40 @@ function loadTreeView(instances) {
         </div>
       </div>`;
 
-    document.getElementById("treeview").innerHTML += instanceNode;
+    document.getElementById("treeview-content").innerHTML += instanceNode;
 
     instance.packages.forEach((package) => {
-      let packageNode = `<div id="${package.id}" class="package hide">
+      let packageNode = `<div id="${instance.id}${package.id}" class="package hide">
           <div class="text-container" onclick="expand(event)">
             <div class="chevron"></div>
-            <p>${package.id}</p>
+            <p>${package.text}</p>
           </div>
         </div>`;
 
       document.getElementById(instance.id).innerHTML += packageNode;
 
       package.entities.forEach((entity) => {
-        let entityNode = `<div id="${entity.id}" class="entity hide">
+        let entityNode = `<div id="${instance.id}${package.id}${entity.id}" class="entity hide">
             <div class="text-container" onclick="expand(event)">
               <div class="chevron"></div>
               <p>${entity.id}</p>
             </div>
           </div>`;
 
-        document.getElementById(package.id).innerHTML += entityNode;
+        document.getElementById(instance.id + package.id).innerHTML +=
+          entityNode;
 
         entity.methods.forEach((method) => {
-          let methodNode = `<div id="${method.id}" class="method hide">
+          let methodNode = `<div id="${instance.id}${package.id}${entity.id}${
+            method.id
+          }" class="method hide">
               <div class="circle"></div>
               <p class=${method.text.toLowerCase()}>${method.text}</p>
             </div>`;
 
-          document.getElementById(entity.id).innerHTML += methodNode;
+          document.getElementById(
+            instance.id + package.id + entity.id
+          ).innerHTML += methodNode;
         });
       });
     });
@@ -205,4 +131,28 @@ function expand(e) {
   for (let i = 1; i < usedElement.children.length; i++) {
     usedElement.children[i].classList.toggle("hide");
   }
+}
+
+// Function: Add New Instance
+function addNewInstance() {
+  let instanceName = document.getElementById("new-instance-name").value;
+  let instanceUrl = document.getElementById("new-instance-url").value;
+
+  if (instanceName === "" || instanceUrl === "") {
+    alert("Please fill in all fields");
+    return;
+  }
+
+  let pkgPath = service_fs.validatePath(instanceUrl);
+
+  if (pkgPath == "") {
+    alert("Invalid Package Path");
+    return;
+  }
+
+  let pkgList = service_instances.loadPackagesList(pkgPath);
+
+  loadTreeView(
+    service_instances.addInstanceToList(instanceName, pkgPath, pkgList)
+  );
 }
