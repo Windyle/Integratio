@@ -1,9 +1,9 @@
 ![Readme Image](https://github.com/Windyle/Integratio/blob/development/static/readme-image.png?raw=true)
 
-![ReleaseVersion](https://img.shields.io/github/release/Windyle/integratio.svg) ![DevVersion](https://img.shields.io/badge/Dev%20Version-0.0.1-blue) ![License](https://img.shields.io/badge/License-MIT-blue) ![Electron](https://img.shields.io/badge/Made%20with-Electron-blue?logo=Electron)
+![ReleaseVersion](https://img.shields.io/github/release/Windyle/integratio.svg) ![DevVersion](https://img.shields.io/badge/Dev%20Version-0.0.1-blue) ![License](https://img.shields.io/badge/License-MIT-blue) ![Electron](https://img.shields.io/badge/Made%20with-Electron-blue?logo=Electron&logoColor=white)
 
 Integratio is a utility application for [Creatio](https://www.creatio.com/it) developers.
-First of all is a faster way to look at your entities' structures and make random bodies for integration testing.
+It's a faster way to look at your entities' structures and make random bodies for integration testing.
 
 ## Changelog
 
