@@ -4,78 +4,76 @@ const fs = require("fs");
 
 let instances = [
   {
-    id: "testaccount",
+    id: "1",
     text: "Account Test",
-    expanded: false,
     packages: [
       {
-        id: "tst",
+        id: "1",
         text: "Tst",
-        expanded: false,
         entities: [
           {
-            id: "Account",
-            expanded: false,
+            id: "1",
+            text: "Account",
             methods: [
               {
-                id: "getaccount",
-                text: "GET",
+                id: "1",
+                type: "GET",
               },
               {
-                id: "postaccount",
-                text: "POST",
+                id: "2",
+                type: "POST",
               },
               {
-                id: "patchaccount",
-                text: "PATCH",
+                id: "3",
+                type: "PATCH",
               },
               {
-                id: "deleteaccount",
-                text: "DELETE",
+                id: "4",
+                type: "DELETE",
               },
             ],
           },
           {
-            id: "tstDetailDiscounts",
-            expanded: false,
+            id: "2",
+            text: "tstDetailDiscounts",
             methods: [
               {
-                id: "getaccount",
-                text: "GET",
+                id: "5",
+                type: "GET",
               },
               {
-                id: "postaccount",
-                text: "POST",
+                id: "6",
+                type: "POST",
               },
               {
-                id: "patchaccount",
-                text: "PATCH",
+                id: "7",
+                type: "PATCH",
               },
               {
-                id: "deleteaccount",
-                text: "DELETE",
+                id: "8",
+                type: "DELETE",
               },
             ],
           },
           {
-            id: "tstDetailAccountBillingInfo",
-            expanded: false,
+            id: "3",
+            text: "tstDetailAccountBillingInfo",
             methods: [
               {
-                id: "getaccount",
-                text: "GET",
+                id: "9",
+                type: "GET",
               },
               {
-                id: "postaccount",
-                text: "POST",
+                id: "10",
+                type: "POST",
               },
               {
-                id: "patchaccount",
-                text: "PATCH",
+                id: "11",
+                type: "PATCH",
               },
               {
-                id: "deleteaccount",
-                text: "DELETE",
+                id: "12",
+                type: "DELETE",
               },
             ],
           },
@@ -138,7 +136,7 @@ module.exports = {
                     .toLowerCase() +
                   "get" +
                   entity,
-                text: "GET",
+                type: "GET",
               },
               {
                 id:
@@ -148,7 +146,7 @@ module.exports = {
                     .toLowerCase() +
                   "post" +
                   entity,
-                text: "POST",
+                type: "POST",
               },
               {
                 id:
@@ -158,7 +156,7 @@ module.exports = {
                     .toLowerCase() +
                   "patch" +
                   entity,
-                text: "PATCH",
+                type: "PATCH",
               },
               {
                 id:
@@ -168,7 +166,7 @@ module.exports = {
                     .toLowerCase() +
                   "delete" +
                   entity,
-                text: "DELETE",
+                type: "DELETE",
               },
             ],
             columns: [],

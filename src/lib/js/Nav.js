@@ -1,10 +1,9 @@
 "use strict";
 
+// Module Import: Instance Manager
 let s_instances = require("./lib/js/Instances.Module");
 
-/**
- * Action Buttons Declaration
- */
+// Action Buttons Declaration
 const actions = [
   { id: "sync", text: "SYNC WITH PACKAGE" },
   { id: "export-postman", text: "EXPORT FOR POSTMAN" },
@@ -20,13 +19,9 @@ function init() {
   // Initialize Actions Sub-Section
   console.info("- Initialize Actions");
 
+  // Generate Buttons from actions array and append to actions section
   actions.forEach((action) => {
-    let button =
-      '<div id="' +
-      action.id +
-      '" class="button disabled">' +
-      action.text +
-      "</div>";
+    let button = `<div id="${action.id}" class="button disabled">${action.text}</div>`;
 
     document.getElementById("actions").innerHTML += button;
   });
@@ -41,7 +36,6 @@ function init() {
   document.getElementById("overlay").style.display = "none";
 
   // Initialize Tree View
-
   loadTreeView(s_instances.getInstancesList());
 }
 
@@ -68,9 +62,16 @@ function showNewInstanceModal() {
 // Function: Load Tree View
 function loadTreeView(instances) {
   console.info("- Load Tree View");
+  // Emtpying Tree View
   document.getElementById("treeview-content").innerHTML = "";
 
   instances.forEach((instance) => {
+    /**
+     * Instance Container
+     *
+     * @param {string} instance.id - Instance ID
+     * @param {string} instance.text - Instance Name
+     */
     let instanceNode = `<div id="${instance.id}" class="root">
         <div class="text-container" onclick="expand(event)">
           <div class="chevron"></div>
@@ -81,7 +82,13 @@ function loadTreeView(instances) {
     document.getElementById("treeview-content").innerHTML += instanceNode;
 
     instance.packages.forEach((current_package) => {
-      let packageNode = `<div id="${instance.id}${current_package.id}" class="package hide">
+      /**
+       * Package Container
+       *
+       * @param {string} current_package.id - Package ID
+       * @param {string} current_package.text - Package Name
+       */
+      let packageNode = `<div id="${instance.id}.${current_package.id}" class="package hide">
           <div class="text-container" onclick="expand(event)">
             <div class="chevron"></div>
             <p>${current_package.text}</p>
@@ -91,26 +98,39 @@ function loadTreeView(instances) {
       document.getElementById(instance.id).innerHTML += packageNode;
 
       current_package.entities.forEach((entity) => {
-        let entityNode = `<div id="${instance.id}${current_package.id}${entity.id}" class="entity hide">
+        /**
+         * Entity Container
+         *
+         * @param {string} entity.id - Entity ID
+         * @param {string} entity.text - Entity Name
+         */
+        let entityNode = `<div id="${instance.id}.${current_package.id}.${entity.id}" class="entity hide">
             <div class="text-container" onclick="expand(event)">
               <div class="chevron"></div>
-              <p>${entity.id}</p>
+              <p>${entity.text}</p>
             </div>
           </div>`;
 
-        document.getElementById(instance.id + current_package.id).innerHTML +=
-          entityNode;
+        document.getElementById(
+          instance.id + "." + current_package.id
+        ).innerHTML += entityNode;
 
         entity.methods.forEach((method) => {
-          let methodNode = `<div id="${instance.id}${current_package.id}${
+          /**
+           * Method Container
+           *
+           * @param {string} method.id - Method ID
+           * @param {string} method.type - Method Type
+           */
+          let methodNode = `<div id="${instance.id}.${current_package.id}.${
             entity.id
-          }${method.id}" class="method hide">
+          }.${method.id}" class="method hide">
               <div class="circle"></div>
-              <p class=${method.text.toLowerCase()}>${method.text}</p>
+              <p class=${method.type.toLowerCase()}>${method.type}</p>
             </div>`;
 
           document.getElementById(
-            instance.id + current_package.id + entity.id
+            instance.id + "." + current_package.id + "." + entity.id
           ).innerHTML += methodNode;
         });
       });
