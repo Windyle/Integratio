@@ -108,90 +108,95 @@ module.exports = {
         entities: [],
       });
 
-      let entities = fs.readdirSync(path + "/" + pkg + "/Data");
+      let entities = fs.readdirSync(path + "/" + pkg + "/Schemas");
 
       entities.forEach((entity) => {
-        if (
-          entity.startsWith("SysDcm") ||
-          entity.startsWith("SysDetail") ||
-          entity.startsWith("SysModule") ||
-          entity.startsWith("RunProcess") ||
-          entity.startsWith("SysWidgetDashboard")
-        ) {
-          return;
-        }
-
-        instances[instances.length - 1].packages[
-          instances[instances.length - 1].packages.length - 1
-        ].entities.push({
-          id: entity,
-          expanded: false,
-          methods: [
-            {
-              id:
-                pkg
-                  .replace(/\s/g, "")
-                  .replace(/[.,-/()]/g, "")
-                  .toLowerCase() +
-                "get" +
-                entity,
-              text: "GET",
-            },
-            {
-              id:
-                pkg
-                  .replace(/\s/g, "")
-                  .replace(/[.,-/()]/g, "")
-                  .toLowerCase() +
-                "post" +
-                entity,
-              text: "POST",
-            },
-            {
-              id:
-                pkg
-                  .replace(/\s/g, "")
-                  .replace(/[.,-/()]/g, "")
-                  .toLowerCase() +
-                "patch" +
-                entity,
-              text: "PATCH",
-            },
-            {
-              id:
-                pkg
-                  .replace(/\s/g, "")
-                  .replace(/[.,-/()]/g, "")
-                  .toLowerCase() +
-                "delete" +
-                entity,
-              text: "DELETE",
-            },
-          ],
-          columns: [],
-        });
-
         let descriptorFile = fs
-          .readFileSync(`${path}/${pkg}/Data/${entity}/descriptor.json`)
+          .readFileSync(`${path}/${pkg}/Schemas/${entity}/descriptor.json`)
           .toString();
         descriptorFile = descriptorFile.slice(1, descriptorFile.length);
 
         let descriptorJson = JSON.parse(descriptorFile);
 
-        let columns = descriptorJson.Descriptor.Columns;
-
-        columns.forEach((column) => {
+        if (
+          descriptorJson.Descriptor.ManagerName === "EntitySchemaManager" &&
+          (descriptorJson.Descriptor.Parent.Name === "BaseEntity" ||
+            descriptorJson.Descriptor.Parent.Name ===
+              descriptorJson.Descriptor.Name)
+        ) {
           instances[instances.length - 1].packages[
             instances[instances.length - 1].packages.length - 1
-          ].entities[
+          ].entities.push({
+            id: entity,
+            expanded: false,
+            methods: [
+              {
+                id:
+                  pkg
+                    .replace(/\s/g, "")
+                    .replace(/[.,-/()]/g, "")
+                    .toLowerCase() +
+                  "get" +
+                  entity,
+                text: "GET",
+              },
+              {
+                id:
+                  pkg
+                    .replace(/\s/g, "")
+                    .replace(/[.,-/()]/g, "")
+                    .toLowerCase() +
+                  "post" +
+                  entity,
+                text: "POST",
+              },
+              {
+                id:
+                  pkg
+                    .replace(/\s/g, "")
+                    .replace(/[.,-/()]/g, "")
+                    .toLowerCase() +
+                  "patch" +
+                  entity,
+                text: "PATCH",
+              },
+              {
+                id:
+                  pkg
+                    .replace(/\s/g, "")
+                    .replace(/[.,-/()]/g, "")
+                    .toLowerCase() +
+                  "delete" +
+                  entity,
+                text: "DELETE",
+              },
+            ],
+            columns: [],
+          });
+
+          let metadataFile = fs
+            .readFileSync(`${path}/${pkg}/Schemas/${entity}/metadata.json`)
+            .toString();
+          metadataFile = metadataFile.slice(1, metadataFile.length);
+
+          let metadata = metadataFile.split("+ MetaData.Schema.D2 ");
+          let columns = metadata.slice(1, metadata.length - 1);
+
+          columns.forEach((column) => {
+            column = JSON.parse(column);
+
             instances[instances.length - 1].packages[
               instances[instances.length - 1].packages.length - 1
-            ].entities.length - 1
-          ].columns.push({
-            id: column.ColumnName,
-            type: lookupColumnDataType(column.DataTypeValueUId),
+            ].entities[
+              instances[instances.length - 1].packages[
+                instances[instances.length - 1].packages.length - 1
+              ].entities.length - 1
+            ].columns.push({
+              id: column.A2,
+              type: lookupColumnDataType(column.S2),
+            });
           });
-        });
+        }
       });
     });
 
@@ -208,6 +213,25 @@ module.exports = {
     });
 
     return pkgList;
+  },
+  validatePath: (path) => {
+    path = path.replace(/\\/g, "/");
+
+    if (!fs.existsSync(path)) {
+      return "";
+    }
+
+    if (!fs.statSync(path).isDirectory()) {
+      return "";
+    }
+
+    let fullPath = path + "/Terrasoft.WebApp/Terrasoft.Configuration/Pkg";
+
+    if (!fs.existsSync(fullPath)) {
+      return "";
+    }
+
+    return fullPath;
   },
 };
 

@@ -9,11 +9,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Defined the Layout of the application
+- First Layout of the application
 - Creatio Instance Management
-- Instance treeview generation
+  - Import from filesystem
+  - Save to local db
+  - Import from local db on startup
+- Instance Treeview Generation
 - Package Sync
-- Random Body Filler
+- Post Request to Creatio with "blank" base url of the selected entity
+  - Random Body Filler
 
 ### Changed
 
