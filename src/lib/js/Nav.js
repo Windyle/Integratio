@@ -1,7 +1,6 @@
 "use strict";
 
-let service_fs = require("./lib/js/Service_FileSystem");
-let service_instances = require("./lib/js/Service_Instances");
+let s_instances = require("./lib/js/Instances.Module");
 
 /**
  * Action Buttons Declaration
@@ -43,7 +42,7 @@ function init() {
 
   // Initialize Tree View
 
-  loadTreeView(service_instances.getInstancesList());
+  loadTreeView(s_instances.getInstancesList());
 }
 
 // Function: Show / Hide Search Bar
@@ -145,18 +144,16 @@ function addNewInstance() {
     return;
   }
 
-  let pkgPath = service_fs.validatePath(instanceUrl);
+  let pkgPath = s_instances.validatePath(instanceUrl);
 
   if (pkgPath == "") {
     alert("Invalid Package Path");
     return;
   }
 
-  let pkgList = service_instances.loadPackagesList(pkgPath);
+  let pkgList = s_instances.loadPackagesList(pkgPath);
 
-  loadTreeView(
-    service_instances.addInstanceToList(instanceName, pkgPath, pkgList)
-  );
+  loadTreeView(s_instances.addInstanceToList(instanceName, pkgPath, pkgList));
 
   showNewInstanceModal();
 }
