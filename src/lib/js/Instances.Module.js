@@ -1,7 +1,9 @@
 "use strict";
 
+// Import Modules
 const fs = require("fs");
 
+// TEST DATA
 let instances = [
   {
     id: "1",
@@ -202,8 +204,11 @@ module.exports = {
     return instances;
   },
   loadPackagesList: (path) => {
+    // Read Folders names from path '.../Terrasoft.WebApp/Terrasoft.Configuration/Pkg'
     let pkgList = fs.readdirSync(path);
 
+    // Only Packages that have 'descriptor.json' are added to the list
+    // The "Custom" package is not added to the list as it is not a good practice to use it for development
     pkgList = pkgList.filter((pkg) => {
       return (
         fs.existsSync(path + "/" + pkg + "/descriptor.json") && pkg != "Custom"
@@ -213,12 +218,14 @@ module.exports = {
     return pkgList;
   },
   validatePath: (path) => {
+    // If the path is copied from explorer it may contains \ instead of /
     path = path.replace(/\\/g, "/");
 
     if (!fs.existsSync(path)) {
       return "";
     }
 
+    // If the path exists, check if it is a folder
     if (!fs.statSync(path).isDirectory()) {
       return "";
     }
@@ -226,6 +233,10 @@ module.exports = {
     let fullPath = path + "/Terrasoft.WebApp/Terrasoft.Configuration/Pkg";
 
     if (!fs.existsSync(fullPath)) {
+      return "";
+    }
+
+    if (!fs.statSync(fullPath).isDirectory()) {
       return "";
     }
 

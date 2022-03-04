@@ -1,6 +1,6 @@
 "use strict";
 
-// Module Import: Instance Manager
+// Import Module: Instance Manager
 let s_instances = require("./lib/js/Instances.Module");
 
 // Action Buttons Declaration
@@ -144,10 +144,12 @@ function expand(e) {
   let parent = element.parentElement;
 
   let usedElement = element;
+  // If usedElement does not have an id then it's not a tree element, but a child of a tree element
   while (!usedElement.hasAttribute("id")) {
     usedElement = usedElement.parentElement;
   }
 
+  // Children[0] is the chevron, Children[1-X] are the sub-elements
   usedElement.children[0].children[0].classList.toggle("expanded");
   for (let i = 1; i < usedElement.children.length; i++) {
     usedElement.children[i].classList.toggle("hide");
@@ -164,6 +166,7 @@ function addNewInstance() {
     return;
   }
 
+  // Check that the instance path is a valid Creatio root path
   let pkgPath = s_instances.validatePath(instanceUrl);
 
   if (pkgPath == "") {
@@ -171,6 +174,7 @@ function addNewInstance() {
     return;
   }
 
+  // Load here the packages list in order to get a cleaner loadTreeView function
   let pkgList = s_instances.loadPackagesList(pkgPath);
 
   loadTreeView(s_instances.addInstanceToList(instanceName, pkgPath, pkgList));
