@@ -246,31 +246,55 @@ module.exports = {
 
 function lookupColumnDataType(typeId) {
   switch (typeId) {
-    case "1":
-      return "string";
-    case "2":
-      return "integer";
-    case "3":
-      return "float";
-    case "4":
-      return "boolean";
-    case "5":
+    case "325a73b8-0f47-44a0-8412-7606f78003ac":
+      return "text50";
+    case "ddb3a1ee-07e8-4d62-b7a9-d0e618b00fbd":
+      return "text250";
+    case "5ca35f10-a101-4c67-a96a-383da6afacfc":
+      return "text500";
+    case "c0f04627-4620-4bc0-84e5-9419dc8516b1":
+      return "textInf";
+    case "3509b9dd-2c90-4540-b82e-8f6ae85d8248":
+      return "textEncr";
+    case "ecbcce18-2a17-4ead-829a-9d02fa9578a4":
+      return "textCRC";
+    case "6b6b74e2-820d-490e-a017-2b73d4ccf2b0":
+      return "numInteger";
+    case "07ba84ce-0bf7-44b4-9f2c-7b15032eb98c":
+      return "numDec01";
+    case "5cc8060d-6d10-4773-89fc-8c12d6f659a6":
+      return "numDec001";
+    case "3f62414e-6c25-4182-bcef-a73c9e396f31":
+      return "numDec0001";
+    case "ff22e049-4d16-46ee-a529-92d8808932dc":
+      return "numDec00001";
+    case "a4aaf398-3531-4a0d-9d75-a587f5b5b59e":
+      return "numDec000000001";
+    case "969093e2-2b4e-463b-883a-3d3b8c61f0cd":
+      return "numCurrency";
+    case "d21e9ef4-c064-4012-b286-fa1a8171da44":
+      return "dateTime";
+    case "603d4960-a1a2-45e9-b232-206a54421b01":
       return "date";
-    case "6":
-      return "datetime";
-    case "7":
-      return "lookup";
-    case "8":
-      return "memo";
-    case "9":
-      return "text";
-    case "10":
+    case "04cc757b-8f06-482c-8a1a-0c0e171d2410":
       return "time";
-    case "11":
+    case "90b65bf8-0ffc-4141-8779-2420877af907":
+      return "boolean";
+    case "fa6e6e49-b996-475e-a77e-73904e4c5a88":
       return "image";
-    case "12":
+    case "b039feb0-ee7c-4884-8aa6-d6d45d84316f":
+      return "imageLink";
+    case "ba40cfc5-f554-4c26-8f57-1bb29cf43c4e":
       return "file";
+    case "dafb71f9-ee9f-4e0b-a4d7-37aa15987155":
+      return "color";
+    case "23018567-a13c-4320-8687-fd6f9e3699bd":
+      return "uuid";
+    case "b7342b7a-5dde-40de-aa7c-24d2a57b3202":
+      return "blob";
+    case "b295071f-7ea9-4e62-8d1a-919bf3732ff2":
+      return "lookup";
     default:
-      return "string";
+      return "undefined";
   }
 }
