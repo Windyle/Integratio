@@ -294,6 +294,8 @@ function lookupColumnDataType(typeId) {
       return "blob";
     case "b295071f-7ea9-4e62-8d1a-919bf3732ff2":
       return "lookup";
+    case "8b3f29bb-ea14-4ce5-a5c5-293a929b6ba2":
+      return "text";
     default:
       return "undefined";
   }

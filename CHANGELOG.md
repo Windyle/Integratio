@@ -18,6 +18,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Package Sync
 - Post Request to Creatio with "blank" base url of the selected entity
   - Random Body Filler
+- Populated lookup for picking inherited columns from metadata for the following objects:
+  - Account
+  - AccountIndustry
+  - Activity
+  - AddressType
+  - Case
+  - CaseCategory
+  - Contact
+  - Invoice
+  - InvoicePayment
+  - Lead
+  - Opportunity
+  - OpportunityProductInterest
+  - Order
+  - OrderDeliveryStatus
+  - OrderProduct
+  - PaymentType
+  - Product
+  - ProductCategory
+  - SocialMessage
 
 ### Changed
 
