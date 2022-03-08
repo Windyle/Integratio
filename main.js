@@ -6,7 +6,6 @@ function createWindow() {
     width: 800,
     height: 600,
     icon: __dirname + "/static/icon.png",
-    darkTheme: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -18,6 +17,9 @@ function createWindow() {
 
   // Hide the menu bar
   mainWindow.removeMenu();
+
+  // Maximize the window
+  mainWindow.maximize();
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -60,8 +62,8 @@ app.on("activate", function () {
   }
 });
 
-try {
-  require("electron-reloader")(module);
-} catch (err) {
-  throw err;
-}
+// try {
+//   require("electron-reloader")(module, { ignore: ["./src/intdb.db"] });
+// } catch (err) {
+//   throw err;
+// }

@@ -1,0 +1,17 @@
+delete from Instance;    
+delete from sqlite_sequence where name='Instance';
+
+delete from Package;    
+delete from sqlite_sequence where name='Package';
+
+delete from Entity;    
+delete from sqlite_sequence where name='Entity';
+
+delete from Method;    
+delete from sqlite_sequence where name='Method';
+
+delete from Column;    
+delete from sqlite_sequence where name='Column';
+
+delete from GetQuery;    
+delete from sqlite_sequence where name='GetQuery';
