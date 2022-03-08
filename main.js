@@ -62,8 +62,8 @@ app.on("activate", function () {
   }
 });
 
-try {
-  require("electron-reloader")(module);
-} catch (err) {
-  throw err;
-}
+// try {
+//   require("electron-reloader")(module, { ignore: ["./src/intdb.db"] });
+// } catch (err) {
+//   throw err;
+// }

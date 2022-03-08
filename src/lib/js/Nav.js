@@ -9,6 +9,7 @@ const actions = [
   { id: "export-postman", text: "EXPORT FOR POSTMAN" },
   { id: "random-fill", text: "RANDOM BODY FILLER" },
   { id: "export-structure", text: "EXPORT DATA STRUCTURE" },
+  { id: "body-type-compare", text: "BODY TYPE COMPARE" },
 ];
 
 // Event Listener for Initialization
@@ -177,7 +178,7 @@ function addNewInstance() {
   // Load here the packages list in order to get a cleaner loadTreeView function
   let pkgList = s_instances.loadPackagesList(pkgPath);
 
-  loadTreeView(s_instances.addInstanceToList(instanceName, pkgPath, pkgList));
+  loadTreeView(s_instances.addInstanceToDB(instanceName, pkgPath, pkgList));
 
   showNewInstanceModal();
 }
