@@ -10,88 +10,6 @@ const { inheritedColumns } = require("../maps/InheritedColumns.Map");
 
 let global_instances = [];
 
-// TEST DATA
-// let instances = [
-//   {
-//     id: "1",
-//     text: "Account Test",
-//     packages: [
-//       {
-//         id: "1",
-//         text: "Tst",
-//         entities: [
-//           {
-//             id: "1",
-//             text: "Account",
-//             methods: [
-//               {
-//                 id: "1",
-//                 type: "GET",
-//               },
-//               {
-//                 id: "2",
-//                 type: "POST",
-//               },
-//               {
-//                 id: "3",
-//                 type: "PATCH",
-//               },
-//               {
-//                 id: "4",
-//                 type: "DELETE",
-//               },
-//             ],
-//           },
-//           {
-//             id: "2",
-//             text: "tstDetailDiscounts",
-//             methods: [
-//               {
-//                 id: "5",
-//                 type: "GET",
-//               },
-//               {
-//                 id: "6",
-//                 type: "POST",
-//               },
-//               {
-//                 id: "7",
-//                 type: "PATCH",
-//               },
-//               {
-//                 id: "8",
-//                 type: "DELETE",
-//               },
-//             ],
-//           },
-//           {
-//             id: "3",
-//             text: "tstDetailAccountBillingInfo",
-//             methods: [
-//               {
-//                 id: "9",
-//                 type: "GET",
-//               },
-//               {
-//                 id: "10",
-//                 type: "POST",
-//               },
-//               {
-//                 id: "11",
-//                 type: "PATCH",
-//               },
-//               {
-//                 id: "12",
-//                 type: "DELETE",
-//               },
-//             ],
-//           },
-//         ],
-//       },
-//     ],
-//   },
-// ];
-
 module.exports = {
   generateInstancesList: () => {
     return new Promise(function (resolve) {
@@ -211,30 +129,30 @@ module.exports = {
 
       // Query last IDs for query preparation
       db.serialize(() => {
-        db.get("SELECT Id FROM Instance ORDER BY Id DESC LIMIT 1", [], (err, row) => {
+        db.get("SELECT seq FROM sqlite_sequence WHERE name='Instance'", [], (err, row) => {
           if (err) {
             return console.error(err.message);
           }
 
-          lastInstanceId = row ? row.Id : 0;
+          lastInstanceId = row ? row.seq : 0;
           console.log(`Last Instance ID: ${lastInstanceId}`);
         });
 
-        db.get("SELECT Id FROM Package ORDER BY Id DESC LIMIT 1", [], (err, row) => {
+        db.get("SELECT seq FROM sqlite_sequence WHERE name='Package'", [], (err, row) => {
           if (err) {
             return console.error(err.message);
           }
 
-          lastPackageId = row ? row.Id : 0;
+          lastPackageId = row ? row.seq : 0;
           console.log(`Last Package ID: ${lastPackageId}`);
         });
 
-        db.get("SELECT Id FROM Entity ORDER BY Id DESC LIMIT 1", [], async (err, row) => {
+        db.get("SELECT seq FROM sqlite_sequence WHERE name='Entity'", [], async (err, row) => {
           if (err) {
             return console.error(err.message);
           }
 
-          lastEntityId = row ? row.Id : 0;
+          lastEntityId = row ? row.seq : 0;
           console.log(`Last Entity ID: ${lastEntityId}`);
 
           await insertToDB(lastInstanceId, lastPackageId, lastEntityId, db, name, path, pkgs);
