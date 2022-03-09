@@ -228,6 +228,26 @@ function prepareInsertQueries(lastInstanceId, lastPackageId, lastEntityId, db, n
         // Clear the hidden special character at the beginning of the file
         metadataFile = metadataFile.slice(1, metadataFile.length);
 
+        // Load Inherited columns, found in metadata D2 Nodes with E16 false
+        let inhColumns = metadataFile
+          .split('+ MetaData.Schema.D2.["')
+          .filter((row) => row.endsWith('"].E16 false') || row.endsWith('"].E16 false\r\n'))
+          .map((row) => row.replace('"].E16 false', ""))
+          .map((row) => row.toString())
+          .map((row) => row.replace("\r\n", ""));
+
+        inhColumns.forEach((columnId) => {
+          let column = inheritedColumns[columnId];
+
+          if (column === undefined) {
+            console.warn(pkg + " -> " + entity + ": Inherited Columns from custom objects are not support yet.");
+            return;
+          }
+
+          // Add Values to the columnValues array for the actual entity
+          columnValues.push([column.name, lastEntityId, column.type]);
+        });
+
         // We only need column information stored in the D2 Nodes
         let metadata = metadataFile.split("+ MetaData.Schema.D2 ");
         let columns = metadata.slice(1, metadata.length - 1);
