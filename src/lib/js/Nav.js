@@ -36,8 +36,14 @@ async function init() {
   document.getElementById("new-instance-modal").style.display = "none";
   document.getElementById("overlay").style.display = "none";
 
+  // Initialize Loader
+  console.info("- Initialize Loader");
+  document.getElementById("loader-container").style.display = "none";
+
   // Initialize Tree View
+  showLoader();
   loadTreeView(await s_instances.generateInstancesList());
+  showLoader();
 }
 
 // Function: Show / Hide Search Bar
@@ -59,6 +65,15 @@ function showNewInstanceModal() {
     document.getElementById("overlay").style.display = "none";
     document.getElementById("new-instance-name").value = "";
     document.getElementById("new-instance-url").value = "";
+  }
+}
+
+// Function: Show / Hide Loader
+function showLoader() {
+  if (document.getElementById("loader-container").style.display == "none") {
+    document.getElementById("loader-container").style.display = "flex";
+  } else {
+    document.getElementById("loader-container").style.display = "none";
   }
 }
 
@@ -181,9 +196,10 @@ async function addNewInstance() {
   // Load here the packages list in order to get a cleaner loadTreeView function
   let pkgList = s_instances.loadPackagesList(pkgPath);
 
+  showNewInstanceModal();
+  showLoader();
   await s_instances.addInstanceToDB(instanceName, pkgPath, pkgList);
 
   loadTreeView(await s_instances.generateInstancesList());
-
-  showNewInstanceModal();
+  showLoader();
 }

@@ -17,6 +17,8 @@
     <link href="./lib/css/Main.css" rel="stylesheet" />
     <!-- Modals Stylesheet -->
     <link href="./lib/css/Modal.css" rel="stylesheet" />
+    <!-- Loader Stylesheet -->
+    <link href="./lib/css/Loader.css" rel="stylesheet" />
   </head>
   <body>
     <!-- Header Section-->
@@ -45,12 +47,7 @@
 
           <!-- Search Bar -->
           <div id="search-container">
-            <input
-              type="text"
-              id="search"
-              placeholder="Search..."
-              autocomplete="off"
-            />
+            <input type="text" id="search" placeholder="Search..." autocomplete="off" />
             <div class="close-search" onclick="showSearchBar()">
               <img alt="close-search" src="../static/x.svg" />
             </div>
@@ -88,6 +85,21 @@
       </div>
       <div class="modal-footer">
         <button class="btn" onclick="addNewInstance()">Create</button>
+      </div>
+    </div>
+
+    <!-- Loader -->
+    <div
+      id="loader-container"
+      class="loader-overlay"
+      role="alertdialog"
+      aria-busy="true"
+      aria-live="polite"
+      aria-label="Loading…"
+    >
+      <div class="loader" aria-hidden="true">
+        <div class="loader__sq"></div>
+        <div class="loader__sq"></div>
       </div>
     </div>
 

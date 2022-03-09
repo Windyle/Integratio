@@ -20,11 +20,10 @@ Waiting for the first release.
 
 2. Go inside the root folder of the project and run: `npm install`
 
-3. To run the application: `npm run dev`
+3. To run the application in dev mode: `npm run dev`
 
 4. Add your features and send a Pull Request
 
-> - Electron-reloader automatically reloads the application when you save a file.
 > - To open the Inspector press _ctrl + shift + i_
 
 ## Contributing
