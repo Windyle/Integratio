@@ -16,7 +16,7 @@ const actions = [
 document.addEventListener("DOMContentLoaded", init);
 
 // Initialize the nav
-function init() {
+async function init() {
   // Initialize Actions Sub-Section
   console.info("- Initialize Actions");
 
@@ -37,7 +37,7 @@ function init() {
   document.getElementById("overlay").style.display = "none";
 
   // Initialize Tree View
-  loadTreeView(s_instances.getInstancesList());
+  loadTreeView(await s_instances.generateInstancesList());
 }
 
 // Function: Show / Hide Search Bar
@@ -57,6 +57,8 @@ function showNewInstanceModal() {
   } else {
     document.getElementById("new-instance-modal").style.display = "none";
     document.getElementById("overlay").style.display = "none";
+    document.getElementById("new-instance-name").value = "";
+    document.getElementById("new-instance-url").value = "";
   }
 }
 
@@ -112,9 +114,7 @@ function loadTreeView(instances) {
             </div>
           </div>`;
 
-        document.getElementById(
-          instance.id + "." + current_package.id
-        ).innerHTML += entityNode;
+        document.getElementById(instance.id + "." + current_package.id).innerHTML += entityNode;
 
         entity.methods.forEach((method) => {
           /**
@@ -123,16 +123,14 @@ function loadTreeView(instances) {
            * @param {string} method.id - Method ID
            * @param {string} method.type - Method Type
            */
-          let methodNode = `<div id="${instance.id}.${current_package.id}.${
-            entity.id
-          }.${method.id}" class="method hide">
+          let methodNode = `<div id="${instance.id}.${current_package.id}.${entity.id}.${
+            method.id
+          }" class="method hide">
               <div class="circle"></div>
               <p class=${method.type.toLowerCase()}>${method.type}</p>
             </div>`;
 
-          document.getElementById(
-            instance.id + "." + current_package.id + "." + entity.id
-          ).innerHTML += methodNode;
+          document.getElementById(instance.id + "." + current_package.id + "." + entity.id).innerHTML += methodNode;
         });
       });
     });
@@ -158,12 +156,17 @@ function expand(e) {
 }
 
 // Function: Add New Instance
-function addNewInstance() {
+async function addNewInstance() {
   let instanceName = document.getElementById("new-instance-name").value;
   let instanceUrl = document.getElementById("new-instance-url").value;
 
   if (instanceName === "" || instanceUrl === "") {
     alert("Please fill in all fields");
+    return;
+  }
+
+  if (s_instances.getInstances().findIndex((instance) => instance.text == instanceName) != -1) {
+    alert("An instance with the provided name already exists");
     return;
   }
 
@@ -178,7 +181,9 @@ function addNewInstance() {
   // Load here the packages list in order to get a cleaner loadTreeView function
   let pkgList = s_instances.loadPackagesList(pkgPath);
 
-  loadTreeView(s_instances.addInstanceToDB(instanceName, pkgPath, pkgList));
+  await s_instances.addInstanceToDB(instanceName, pkgPath, pkgList);
+
+  loadTreeView(await s_instances.generateInstancesList());
 
   showNewInstanceModal();
 }
