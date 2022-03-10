@@ -130,7 +130,9 @@ function setCurrentInstance(instanceId) {
   let treeview = document.getElementById("treeview-content");
   for (let i = 0; i < treeview.children.length; i++) {
     if (treeview.children[i].id != instanceId) {
+      // Toggle expand to chevron
       treeview.children[i].children[0].children[0].classList.remove("expanded");
+      // Add class to hide children
       for (let j = 1; j < treeview.children[i].children.length; j++) {
         treeview.children[i].children[j].classList.add("hide");
       }
