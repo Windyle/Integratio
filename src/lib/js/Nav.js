@@ -102,12 +102,21 @@ function treeviewDropdownShow(e) {
   if (e.button == 2) {
     // Show dropdown with Edit and Delete options
     let dropdown = document.getElementById("treeview-dropdown");
-    dropdown.style.display = "block";
+    dropdown.style.display = "flex";
     dropdown.style.left = e.clientX / 1.5 + "px";
     dropdown.style.top = e.clientY / 1.1 + "px";
 
+    // Retrieve node element
+    let element = e.target;
+
+    let nodeElement = element;
+    // If nodeElement does not have an id then it's not a tree element, but a child of a tree element
+    while (!nodeElement.hasAttribute("id")) {
+      nodeElement = nodeElement.parentElement;
+    }
+
     // Set current instance
-    setCurrentInstance(e.target.id);
+    setCurrentInstance(nodeElement.id);
   }
 }
 
@@ -278,12 +287,13 @@ async function addNewInstance() {
 }
 
 // Function: Delete Instance
-async function deleteInstance(instanceId) {
-  // Show Loader
+async function deleteInstance() {
+  // Hide Modal and Show Loader
+  showDeleteInstanceModal();
   showLoader();
 
   // Delete Instance from DB and reload the TreeView
-  await s_instances.deleteInstanceFromDB(instanceId);
+  await s_instances.deleteInstanceFromDB(current_instance);
 
   loadTreeView(await s_instances.generateInstancesList());
 

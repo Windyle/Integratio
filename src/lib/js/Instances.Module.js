@@ -172,24 +172,44 @@ module.exports = {
       });
     });
   },
-  deleteInstance: (id) => {
+  deleteInstanceFromDB: (id) => {
     return new Promise(function (resolve) {
       // Open DB connection
       let db = new sqlite3.Database("./src/intdb.db");
 
-      // Delete Instance, Every linked entity has the CASCADE DELETE option set
+      // Delete Instance and linked entities
       db.serialize(() => {
         db.run("DELETE FROM Instance WHERE Id=?", [id], (err) => {
           if (err) {
             return console.error(err.message);
           }
         });
-      });
 
-      db.close((err) => {
-        if (err) return console.error(err.message);
+        db.run("DELETE FROM Package WHERE InstanceId=?", [id], (err) => {
+          if (err) {
+            return console.error(err.message);
+          }
+        });
 
-        resolve();
+        db.run("DELETE FROM Entity WHERE PackageId NOT IN (SELECT Id FROM Package)", [], (err) => {
+          if (err) {
+            return console.error(err.message);
+          }
+        });
+
+        db.run("DELETE FROM Method WHERE EntityId NOT IN (SELECT Id FROM Entity)", [], (err) => {
+          if (err) {
+            return console.error(err.message);
+          }
+        });
+
+        db.run("DELETE FROM Column WHERE EntityId NOT IN (SELECT Id FROM Entity)", [], (err) => {
+          if (err) {
+            return console.error(err.message);
+          }
+
+          resolve();
+        });
       });
     });
   },
