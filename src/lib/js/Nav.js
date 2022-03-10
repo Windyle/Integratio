@@ -5,11 +5,11 @@ let s_instances = require("./lib/js/Instances.Module");
 
 // Action Buttons Declaration
 const actions = [
-  { id: "sync", text: "SYNC WITH PACKAGE" },
-  { id: "export-postman", text: "EXPORT FOR POSTMAN" },
+  { id: "sync", text: "SYNC INSTANCE" },
   { id: "random-fill", text: "RANDOM BODY FILLER" },
+  { id: "body-type-compare", text: "BODY VALIDATOR" },
+  { id: "export-postman", text: "EXPORT FOR POSTMAN" },
   { id: "export-structure", text: "EXPORT DATA STRUCTURE" },
-  { id: "body-type-compare", text: "BODY TYPE COMPARE" },
 ];
 
 // Event Listener for Initialization
@@ -233,10 +233,15 @@ async function addNewInstance() {
   // Load here the packages list in order to get a cleaner loadTreeView function
   let pkgList = s_instances.loadPackagesList(pkgPath);
 
+  // Hide Modal and Show Loader
   showNewInstanceModal();
   showLoader();
+
+  // Add Instance to Instances DB and reload the TreeView
   await s_instances.addInstanceToDB(instanceName, pkgPath, pkgList);
 
   loadTreeView(await s_instances.generateInstancesList());
+
+  // Hide Loader
   showLoader();
 }
