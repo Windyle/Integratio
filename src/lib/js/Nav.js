@@ -12,6 +12,9 @@ const actions = [
   { id: "export-structure", text: "EXPORT DATA STRUCTURE" },
 ];
 
+// Process Variables
+let current_instance;
+
 // Event Listener for Initialization
 document.addEventListener("DOMContentLoaded", init);
 
@@ -102,16 +105,37 @@ function treeviewDropdownShow(e) {
     dropdown.style.display = "block";
     dropdown.style.left = e.clientX / 1.5 + "px";
     dropdown.style.top = e.clientY / 1.1 + "px";
+
+    // Set current instance
+    setCurrentInstance(e.target.id);
   }
 }
 
 function treeviewDropdownHide(e) {
-  // Check if user pressed right mouse button
-  // if (e.button == 2 || e.type == "mouseleave") {
-  // Show dropdown with Edit and Delete options
   let dropdown = document.getElementById("treeview-dropdown");
   dropdown.style.display = "none";
-  // }
+}
+
+// Function: Set Current Instance
+function setCurrentInstance(instanceId) {
+  current_instance = instanceId;
+
+  // Get Instance Name
+  let instanceName = document.getElementById(instanceId).innerText;
+
+  // Update instance display in header
+  document.getElementById("instance-display").innerHTML = instanceName;
+
+  // Toggle expand for other instances
+  let treeview = document.getElementById("treeview-content");
+  for (let i = 0; i < treeview.children.length; i++) {
+    if (treeview.children[i].id != instanceId) {
+      treeview.children[i].children[0].children[0].classList.remove("expanded");
+      for (let j = 1; j < treeview.children[i].children.length; j++) {
+        treeview.children[i].children[j].classList.add("hide");
+      }
+    }
+  }
 }
 
 // Function: Load Tree View
@@ -194,16 +218,21 @@ function expand(e) {
   let element = e.target;
   let parent = element.parentElement;
 
-  let usedElement = element;
-  // If usedElement does not have an id then it's not a tree element, but a child of a tree element
-  while (!usedElement.hasAttribute("id")) {
-    usedElement = usedElement.parentElement;
+  let nodeElement = element;
+  // If nodeElement does not have an id then it's not a tree element, but a child of a tree element
+  while (!nodeElement.hasAttribute("id")) {
+    nodeElement = nodeElement.parentElement;
+  }
+
+  // If element is an instance node then set current instance
+  if (nodeElement.classList.contains("root")) {
+    setCurrentInstance(nodeElement.id);
   }
 
   // Children[0] is the chevron, Children[1-X] are the sub-elements
-  usedElement.children[0].children[0].classList.toggle("expanded");
-  for (let i = 1; i < usedElement.children.length; i++) {
-    usedElement.children[i].classList.toggle("hide");
+  nodeElement.children[0].children[0].classList.toggle("expanded");
+  for (let i = 1; i < nodeElement.children.length; i++) {
+    nodeElement.children[i].classList.toggle("hide");
   }
 }
 
@@ -239,6 +268,20 @@ async function addNewInstance() {
 
   // Add Instance to Instances DB and reload the TreeView
   await s_instances.addInstanceToDB(instanceName, pkgPath, pkgList);
+
+  loadTreeView(await s_instances.generateInstancesList());
+
+  // Hide Loader
+  showLoader();
+}
+
+// Function: Delete Instance
+async function deleteInstance(instanceId) {
+  // Show Loader
+  showLoader();
+
+  // Delete Instance from DB and reload the TreeView
+  await s_instances.deleteInstanceFromDB(instanceId);
 
   loadTreeView(await s_instances.generateInstancesList());
 

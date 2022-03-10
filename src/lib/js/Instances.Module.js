@@ -172,6 +172,27 @@ module.exports = {
       });
     });
   },
+  deleteInstance: (id) => {
+    return new Promise(function (resolve) {
+      // Open DB connection
+      let db = new sqlite3.Database("./src/intdb.db");
+
+      // Delete Instance, Every linked entity has the CASCADE DELETE option set
+      db.serialize(() => {
+        db.run("DELETE FROM Instance WHERE Id=?", [id], (err) => {
+          if (err) {
+            return console.error(err.message);
+          }
+        });
+      });
+
+      db.close((err) => {
+        if (err) return console.error(err.message);
+
+        resolve();
+      });
+    });
+  },
   loadPackagesList: (path) => {
     // Read Folders names from path '.../Terrasoft.WebApp/Terrasoft.Configuration/Pkg'
     let pkgList = fs.readdirSync(path);
