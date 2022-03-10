@@ -20,8 +20,8 @@ module.exports = {
       // Open DB connection
       let db = new sqlite3.Database("./src/intdb.db");
 
-      // Query instances
       db.serialize(() => {
+        // Get all instances
         db.each("SELECT * FROM Instance", [], (err, row) => {
           if (err) {
             throw err;
@@ -35,6 +35,7 @@ module.exports = {
           });
         });
 
+        // Get all packages
         db.each("SELECT * FROM Package", [], (err, row) => {
           if (err) {
             throw err;
@@ -42,12 +43,14 @@ module.exports = {
 
           let instanceIndex = instances.findIndex((instance) => instance.id == row.InstanceId);
 
+          // Add package to its instance
           instances[instanceIndex].packages.push({
             id: "" + row.Id,
             text: row.Name,
             entities: [],
           });
 
+          // Save package indexes for later lookups
           findPkg.push({
             id: row.Id,
             index: instances[instanceIndex].packages.length - 1,
@@ -55,6 +58,7 @@ module.exports = {
           });
         });
 
+        // Get all entities
         db.each("SELECT * FROM Entity", [], (err, row) => {
           if (err) {
             throw err;
@@ -62,6 +66,7 @@ module.exports = {
 
           let indexInfo = findPkg[findPkg.findIndex((fp) => fp.id == row.PackageId)];
 
+          // Add entity to its package
           instances[indexInfo.instanceIndex].packages[indexInfo.index].entities.push({
             id: row.Id,
             text: row.Name,
@@ -69,6 +74,7 @@ module.exports = {
             columns: [],
           });
 
+          // Save entity indexes for later lookups
           findEntity.push({
             id: row.Id,
             index: instances[indexInfo.instanceIndex].packages[indexInfo.index].entities.length - 1,
@@ -77,6 +83,7 @@ module.exports = {
           });
         });
 
+        // Get all methods
         db.each("SELECT * FROM Method", [], (err, row) => {
           if (err) {
             throw err;
@@ -84,12 +91,14 @@ module.exports = {
 
           let indexInfo = findEntity[findEntity.findIndex((fe) => fe.id == row.EntityId)];
 
+          // Add method to its entity
           instances[indexInfo.instanceIndex].packages[indexInfo.packageIndex].entities[indexInfo.index].methods.push({
             id: "" + row.Id,
             type: row.Type,
           });
         });
 
+        // Get all columns
         db.each(
           "SELECT * FROM Column",
           [],
@@ -100,6 +109,7 @@ module.exports = {
 
             let indexInfo = findEntity[findEntity.findIndex((fe) => fe.id == row.EntityId)];
 
+            // Add column to its entity
             instances[indexInfo.instanceIndex].packages[indexInfo.packageIndex].entities[indexInfo.index].columns.push({
               id: "" + row.Id,
               name: row.Name,

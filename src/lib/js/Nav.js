@@ -31,14 +31,19 @@ async function init() {
   console.info("- Initialize Search Bar");
   document.getElementById("search-container").style.display = "none";
 
-  // Initialize New Instance Modal
-  console.info("- Initialize New Instance Modal");
-  document.getElementById("new-instance-modal").style.display = "none";
+  // Initialize Modals
+  console.info("- Initialize Modals");
   document.getElementById("overlay").style.display = "none";
+  document.getElementById("new-instance-modal").style.display = "none";
+  document.getElementById("delete-instance-modal").style.display = "none";
 
   // Initialize Loader
   console.info("- Initialize Loader");
   document.getElementById("loader-container").style.display = "none";
+
+  // Initialize Tree View Dropdown
+  console.info("- Initialize Tree View Dropdown");
+  document.getElementById("treeview-dropdown").style.display = "none";
 
   // Initialize Tree View
   showLoader();
@@ -68,6 +73,17 @@ function showNewInstanceModal() {
   }
 }
 
+// Function: Show / Hide Delete Instance Modal
+function showDeleteInstanceModal() {
+  if (document.getElementById("delete-instance-modal").style.display == "none") {
+    document.getElementById("delete-instance-modal").style.display = "block";
+    document.getElementById("overlay").style.display = "block";
+  } else {
+    document.getElementById("delete-instance-modal").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
+  }
+}
+
 // Function: Show / Hide Loader
 function showLoader() {
   if (document.getElementById("loader-container").style.display == "none") {
@@ -75,6 +91,27 @@ function showLoader() {
   } else {
     document.getElementById("loader-container").style.display = "none";
   }
+}
+
+// Function: Treeview Dropdown Menu from Right Click
+function treeviewDropdownShow(e) {
+  // Check if user pressed right mouse button
+  if (e.button == 2) {
+    // Show dropdown with Edit and Delete options
+    let dropdown = document.getElementById("treeview-dropdown");
+    dropdown.style.display = "block";
+    dropdown.style.left = e.clientX / 1.5 + "px";
+    dropdown.style.top = e.clientY / 1.1 + "px";
+  }
+}
+
+function treeviewDropdownHide(e) {
+  // Check if user pressed right mouse button
+  // if (e.button == 2 || e.type == "mouseleave") {
+  // Show dropdown with Edit and Delete options
+  let dropdown = document.getElementById("treeview-dropdown");
+  dropdown.style.display = "none";
+  // }
 }
 
 // Function: Load Tree View
@@ -90,7 +127,7 @@ function loadTreeView(instances) {
      * @param {string} instance.id - Instance ID
      * @param {string} instance.text - Instance Name
      */
-    let instanceNode = `<div id="${instance.id}" class="root">
+    let instanceNode = `<div id="${instance.id}" class="root" onmousedown="treeviewDropdownShow(event)" >
         <div class="text-container" onclick="expand(event)">
           <div class="chevron"></div>
           <p>${instance.text}</p>
