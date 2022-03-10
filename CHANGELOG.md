@@ -15,9 +15,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Save to local db
   - Import from local db on startup
 - Instance Treeview Generation
-- Package Sync
+- Instance Sync
 - Post Request to Creatio with "blank" base url of the selected entity
   - Random Body Filler
+- Get Filters generator
+- Get Filters local save for easier access
 - Populated lookup for picking inherited columns from metadata for the following objects:
   - Account
   - AccountIndustry
