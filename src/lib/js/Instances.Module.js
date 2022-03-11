@@ -127,6 +127,20 @@ module.exports = {
   getInstances: () => {
     return global_instances;
   },
+  getInstanceInfo: (id) => {
+    // Declare instance info template
+    let info = {
+      id: id,
+      name: "",
+      path: "",
+    };
+
+    // Populate info with intance information
+    info.name = global_instances[global_instances.findIndex((instance) => instance.id === id)].text;
+    info.path = global_instances[global_instances.findIndex((instance) => instance.id === id)].path;
+
+    return info;
+  },
   addInstanceToDB: (name, path, pkgs) => {
     return new Promise(function (resolve) {
       // Open DB connection
@@ -166,6 +180,27 @@ module.exports = {
           console.log(`Last Entity ID: ${lastEntityId}`);
 
           await insertToDB(lastInstanceId, lastPackageId, lastEntityId, db, name, path, pkgs);
+
+          resolve();
+        });
+      });
+    });
+  },
+  editInstance: (id, name, path) => {
+    return new Promise((resolve) => {
+      // Update Instances List
+      global_instances[global_instances.findIndex((instance) => instance.id === id)].text = name;
+      global_instances[global_instances.findIndex((instance) => instance.id === id)].path = path;
+
+      // Open DB connection
+      let db = new sqlite3.Database("./src/intdb.db");
+
+      // Update Instance on DB
+      db.serialize(() => {
+        db.run("UPDATE Instance SET Name = ?, Path = ? WHERE Id = ?", [name, path, id], (err) => {
+          if (err) {
+            return console.error(err.message);
+          }
 
           resolve();
         });

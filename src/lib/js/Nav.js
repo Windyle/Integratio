@@ -38,6 +38,7 @@ async function init() {
   console.info("- Initialize Modals");
   document.getElementById("overlay").style.display = "none";
   document.getElementById("new-instance-modal").style.display = "none";
+  document.getElementById("edit-instance-modal").style.display = "none";
   document.getElementById("delete-instance-modal").style.display = "none";
 
   // Initialize Loader
@@ -76,6 +77,24 @@ function showNewInstanceModal() {
   }
 }
 
+// Function: Show / Hide Edit Instance Modal
+function showEditInstanceModal() {
+  if (document.getElementById("edit-instance-modal").style.display == "none") {
+    document.getElementById("edit-instance-modal").style.display = "block";
+    document.getElementById("overlay").style.display = "block";
+
+    let instance = s_instances.getInstanceInfo(current_instance);
+
+    document.getElementById("edit-instance-name").value = instance.name;
+    document.getElementById("edit-instance-url").value = instance.path.split("/Terrasoft.WebApp")[0];
+  } else {
+    document.getElementById("edit-instance-modal").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("edit-instance-name").value = "";
+    document.getElementById("edit-instance-url").value = "";
+  }
+}
+
 // Function: Show / Hide Delete Instance Modal
 function showDeleteInstanceModal() {
   if (document.getElementById("delete-instance-modal").style.display == "none") {
@@ -103,8 +122,8 @@ function treeviewDropdownShow(e) {
     // Show dropdown with Edit and Delete options
     let dropdown = document.getElementById("treeview-dropdown");
     dropdown.style.display = "flex";
-    dropdown.style.left = e.clientX / 1.5 + "px";
-    dropdown.style.top = e.clientY / 1.1 + "px";
+    dropdown.style.left = e.clientX + "px";
+    dropdown.style.top = e.clientY / 1.2 + "px";
 
     // Retrieve node element
     let element = e.target;
@@ -266,7 +285,7 @@ async function addNewInstance() {
   let pkgPath = s_instances.validatePath(instanceUrl);
 
   if (pkgPath == "") {
-    alert("Invalid Package Path");
+    alert("Invalid Instance Path");
     return;
   }
 
@@ -296,6 +315,41 @@ async function deleteInstance() {
   await s_instances.deleteInstanceFromDB(current_instance);
 
   loadTreeView(await s_instances.generateInstancesList());
+
+  // Hide Loader
+  showLoader();
+}
+
+// Function: Edit Instance Info
+async function editInstance() {
+  let new_name = document.getElementById("edit-instance-name").value;
+  let new_path = document.getElementById("edit-instance-url").value;
+
+  if (new_name === "" || new_path === "") {
+    alert("Please fill in all fields");
+    return;
+  }
+
+  if (s_instances.getInstances().findIndex((instance) => instance.text == new_name) != -1) {
+    alert("An instance with the provided name already exists");
+    return;
+  }
+
+  // Check that the instance path is a valid Creatio root path
+  let pkgPath = s_instances.validatePath(new_path);
+
+  if (pkgPath == "") {
+    alert("Invalid Instance Path");
+    return;
+  }
+
+  // Hide Modal and Show Loader
+  showEditInstanceModal();
+  showLoader();
+
+  await s_instances.editInstance(current_instance, new_name, pkgPath);
+
+  document.getElementById(current_instance).children[0].children[1].innerHTML = new_name;
 
   // Hide Loader
   showLoader();

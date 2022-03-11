@@ -60,7 +60,7 @@
       <!-- Treeview Dropdown Menu -->
       <div id="treeview-dropdown" onmouseleave="treeviewDropdownHide(event)">
         <!-- Dropdown Menu Option: Edit -->
-        <div class="option" data-action="edit">
+        <div class="option" data-action="edit" onclick="showEditInstanceModal()">
           <div class="icon">
             <img alt="icon" src="../static/edit-3.svg" />
           </div>
@@ -109,6 +109,27 @@
       </div>
       <div class="modal-footer">
         <button class="btn" onclick="addNewInstance()">Create</button>
+      </div>
+    </div>
+
+    <!-- Edit Instance Modal -->
+    <div id="edit-instance-modal" class="modal">
+      <div class="modal-header">
+        <h2>EDIT INSTANCE</h2>
+        <span class="close" onclick="showEditInstanceModal()"></span>
+      </div>
+      <div class="modal-body">
+        <div class="input-container">
+          <label for="edit-instance-name">Instance Name</label>
+          <input type="text" id="edit-instance-name" />
+        </div>
+        <div class="input-container">
+          <label for="edit-instance-url">Instance Path</label>
+          <input type="text" id="edit-instance-url" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="editInstance()">Confirm</button>
       </div>
     </div>
 
