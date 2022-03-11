@@ -1,7 +1,8 @@
 "use strict";
 
 // Import Module: Instance Manager
-let s_instances = require("./lib/js/Instances.Module");
+const s_instances = require("./lib/js/Instances.Module");
+const { ipcRenderer } = require("electron");
 
 // Action Buttons Declaration
 const actions = [
@@ -53,6 +54,24 @@ async function init() {
   showLoader();
   loadTreeView(await s_instances.generateInstancesList());
   showLoader();
+}
+
+// Window Actions Functions
+function closeWindow() {
+  ipcRenderer.send("close-app");
+}
+
+function maximizeWindow() {
+  ipcRenderer.send("maximize-app");
+}
+
+function minimizeWindow() {
+  ipcRenderer.send("minimize-app");
+}
+
+// Function: Open Issue Page on Help Button click
+function openIssuePage() {
+  require("electron").shell.openExternal("https://github.com/Windyle/Integratio/issues");
 }
 
 // Function: Show / Hide Search Bar

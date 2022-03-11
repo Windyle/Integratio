@@ -27,12 +27,17 @@
       <!-- Instance Display - Top Left Corner -->
       <h2 class="header" id="instance-display">[No Instance Selected]</h2>
       <!-- Help Button - Top Right Corner -->
-      <img
-        alt="Help Button"
-        class="help"
-        src="../static/help-circle.svg"
-        onclick="window.open('https://github.com/Windyle/Integratio/issues', '_blank').focus()"
-      />
+      <img alt="Help Button" class="help" src="../static/help-circle.svg" onclick="openIssuePage()" />
+      <!-- Window Action Button - Top Right Corner -->
+      <div class="window-action" id="minimize-window" onclick="minimizeWindow()">
+        <img src="../static/minus.svg" />
+      </div>
+      <div class="window-action" id="maximize-window" onclick="maximizeWindow()">
+        <img src="../static/maximize.svg" />
+      </div>
+      <div class="window-action" id="close-window" onclick="closeWindow()">
+        <img src="../static/close.svg" />
+      </div>
     </header>
 
     <!-- Nav Section -->
