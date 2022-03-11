@@ -1,16 +1,18 @@
 "use strict";
 
-// Import Module: Instance Manager
+// Import Modules:
+// Instances Service
 const s_instances = require("./lib/js/Instances.Module");
+// Methods Service
+const s_methods = require("./lib/js/Methods.Module");
 const { ipcRenderer } = require("electron");
 
 // Action Buttons Declaration
 const actions = [
-  { id: "sync", text: "SYNC INSTANCE" },
-  { id: "random-fill", text: "RANDOM BODY FILLER" },
-  { id: "body-type-compare", text: "BODY VALIDATOR" },
-  { id: "export-postman", text: "EXPORT FOR POSTMAN" },
-  { id: "export-structure", text: "EXPORT DATA STRUCTURE" },
+  { id: "random-fill", text: "RANDOM BODY FILLER", onclick: "" },
+  { id: "body-type-compare", text: "BODY VALIDATOR", onclick: "" },
+  { id: "export-postman", text: "EXPORT FOR POSTMAN", onclick: "" },
+  { id: "export-structure", text: "EXPORT DATA STRUCTURE", onclick: "" },
 ];
 
 // Process Variables
@@ -26,7 +28,7 @@ async function init() {
 
   // Generate Buttons from actions array and append to actions section
   actions.forEach((action) => {
-    let button = `<div id="${action.id}" class="button disabled">${action.text}</div>`;
+    let button = `<div id="${action.id}" class="button disabled" onclick="${action.onclick}">${action.text}</div>`;
 
     document.getElementById("actions").innerHTML += button;
   });
@@ -185,6 +187,18 @@ function setCurrentInstance(instanceId) {
       }
     }
   }
+
+  // Enable Actions
+  let actions = [];
+
+  enableActions(actions);
+}
+
+// Function: Enable Action Buttons
+function enableActions(actions) {
+  actions.forEach((id) => {
+    document.getElementById(id).classList.remove("disabled");
+  });
 }
 
 // Function: Load Tree View
@@ -250,7 +264,9 @@ function loadTreeView(instances) {
            */
           let methodNode = `<div id="${instance.id}.${current_package.id}.${entity.id}.${
             method.id
-          }" class="method hide">
+          }" class="method hide" onclick="methodRoute(${method.type}, ${instance.id}, ${current_package.id}, ${
+            entity.id
+          })>
               <div class="circle"></div>
               <p class=${method.type.toLowerCase()}>${method.type}</p>
             </div>`;
@@ -372,4 +388,29 @@ async function editInstance() {
 
   // Hide Loader
   showLoader();
+}
+
+/**
+ * Method Route
+ *
+ * @param {string} type // GET, POST, PATCH, DELETE
+ * @param {string} instanceId
+ * @param {string} packageId
+ * @param {string} entityId
+ */
+function methodRoute(type, instanceId, packageId, entityId) {
+  switch (type) {
+    case "GET":
+      s_methods.getMethod(instanceId, packageId, entityId);
+      break;
+    case "POST":
+      s_methods.postMethod(instanceId, packageId, entityId);
+      break;
+    case "PATCH":
+      s_methods.patchMethod(instanceId, packageId, entityId);
+      break;
+    case "DELETE":
+      s_methods.deleteMethod(instanceId, packageId, entityId);
+      break;
+  }
 }
