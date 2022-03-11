@@ -68,6 +68,11 @@
   font-family: var(--font-family);
 }
 
+.modal-body.danger {
+  color: var(--text);
+  font-size: 1.2em;
+}
+
 .modal-body .input-container {
   margin-top: 20px;
   display: flex;
@@ -149,6 +154,13 @@
 .modal-footer .btn {
   margin-left: 32px;
   background-color: var(--primary);
+  color: var(--text);
+  width: 100px;
+}
+
+.modal-footer .btn.danger {
+  margin: auto;
+  background-color: var(--danger);
   color: var(--text);
   width: 100px;
 }

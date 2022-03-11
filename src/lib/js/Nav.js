@@ -5,18 +5,21 @@ let s_instances = require("./lib/js/Instances.Module");
 
 // Action Buttons Declaration
 const actions = [
-  { id: "sync", text: "SYNC WITH PACKAGE" },
-  { id: "export-postman", text: "EXPORT FOR POSTMAN" },
+  { id: "sync", text: "SYNC INSTANCE" },
   { id: "random-fill", text: "RANDOM BODY FILLER" },
+  { id: "body-type-compare", text: "BODY VALIDATOR" },
+  { id: "export-postman", text: "EXPORT FOR POSTMAN" },
   { id: "export-structure", text: "EXPORT DATA STRUCTURE" },
-  { id: "body-type-compare", text: "BODY TYPE COMPARE" },
 ];
+
+// Process Variables
+let current_instance;
 
 // Event Listener for Initialization
 document.addEventListener("DOMContentLoaded", init);
 
 // Initialize the nav
-function init() {
+async function init() {
   // Initialize Actions Sub-Section
   console.info("- Initialize Actions");
 
@@ -31,13 +34,25 @@ function init() {
   console.info("- Initialize Search Bar");
   document.getElementById("search-container").style.display = "none";
 
-  // Initialize New Instance Modal
-  console.info("- Initialize New Instance Modal");
-  document.getElementById("new-instance-modal").style.display = "none";
+  // Initialize Modals
+  console.info("- Initialize Modals");
   document.getElementById("overlay").style.display = "none";
+  document.getElementById("new-instance-modal").style.display = "none";
+  document.getElementById("edit-instance-modal").style.display = "none";
+  document.getElementById("delete-instance-modal").style.display = "none";
+
+  // Initialize Loader
+  console.info("- Initialize Loader");
+  document.getElementById("loader-container").style.display = "none";
+
+  // Initialize Tree View Dropdown
+  console.info("- Initialize Tree View Dropdown");
+  document.getElementById("treeview-dropdown").style.display = "none";
 
   // Initialize Tree View
-  loadTreeView(s_instances.getInstancesList());
+  showLoader();
+  loadTreeView(await s_instances.generateInstancesList());
+  showLoader();
 }
 
 // Function: Show / Hide Search Bar
@@ -57,6 +72,99 @@ function showNewInstanceModal() {
   } else {
     document.getElementById("new-instance-modal").style.display = "none";
     document.getElementById("overlay").style.display = "none";
+    document.getElementById("new-instance-name").value = "";
+    document.getElementById("new-instance-url").value = "";
+  }
+}
+
+// Function: Show / Hide Edit Instance Modal
+function showEditInstanceModal() {
+  if (document.getElementById("edit-instance-modal").style.display == "none") {
+    document.getElementById("edit-instance-modal").style.display = "block";
+    document.getElementById("overlay").style.display = "block";
+
+    let instance = s_instances.getInstanceInfo(current_instance);
+
+    document.getElementById("edit-instance-name").value = instance.name;
+    document.getElementById("edit-instance-url").value = instance.path.split("/Terrasoft.WebApp")[0];
+  } else {
+    document.getElementById("edit-instance-modal").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("edit-instance-name").value = "";
+    document.getElementById("edit-instance-url").value = "";
+  }
+}
+
+// Function: Show / Hide Delete Instance Modal
+function showDeleteInstanceModal() {
+  if (document.getElementById("delete-instance-modal").style.display == "none") {
+    document.getElementById("delete-instance-modal").style.display = "block";
+    document.getElementById("overlay").style.display = "block";
+  } else {
+    document.getElementById("delete-instance-modal").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
+  }
+}
+
+// Function: Show / Hide Loader
+function showLoader() {
+  if (document.getElementById("loader-container").style.display == "none") {
+    document.getElementById("loader-container").style.display = "flex";
+  } else {
+    document.getElementById("loader-container").style.display = "none";
+  }
+}
+
+// Function: Treeview Dropdown Menu from Right Click
+function treeviewDropdownShow(e) {
+  // Check if user pressed right mouse button
+  if (e.button == 2) {
+    // Show dropdown with Edit and Delete options
+    let dropdown = document.getElementById("treeview-dropdown");
+    dropdown.style.display = "flex";
+    dropdown.style.left = e.clientX + "px";
+    dropdown.style.top = e.clientY / 1.2 + "px";
+
+    // Retrieve node element
+    let element = e.target;
+
+    let nodeElement = element;
+    // If nodeElement does not have an id then it's not a tree element, but a child of a tree element
+    while (!nodeElement.hasAttribute("id")) {
+      nodeElement = nodeElement.parentElement;
+    }
+
+    // Set current instance
+    setCurrentInstance(nodeElement.id);
+  }
+}
+
+function treeviewDropdownHide(e) {
+  let dropdown = document.getElementById("treeview-dropdown");
+  dropdown.style.display = "none";
+}
+
+// Function: Set Current Instance
+function setCurrentInstance(instanceId) {
+  current_instance = instanceId;
+
+  // Get Instance Name
+  let instanceName = document.getElementById(instanceId).innerText;
+
+  // Update instance display in header
+  document.getElementById("instance-display").innerHTML = instanceName;
+
+  // Toggle expand for other instances
+  let treeview = document.getElementById("treeview-content");
+  for (let i = 0; i < treeview.children.length; i++) {
+    if (treeview.children[i].id != instanceId) {
+      // Toggle expand to chevron
+      treeview.children[i].children[0].children[0].classList.remove("expanded");
+      // Add class to hide children
+      for (let j = 1; j < treeview.children[i].children.length; j++) {
+        treeview.children[i].children[j].classList.add("hide");
+      }
+    }
   }
 }
 
@@ -73,7 +181,7 @@ function loadTreeView(instances) {
      * @param {string} instance.id - Instance ID
      * @param {string} instance.text - Instance Name
      */
-    let instanceNode = `<div id="${instance.id}" class="root">
+    let instanceNode = `<div id="${instance.id}" class="root" onmousedown="treeviewDropdownShow(event)" >
         <div class="text-container" onclick="expand(event)">
           <div class="chevron"></div>
           <p>${instance.text}</p>
@@ -112,9 +220,7 @@ function loadTreeView(instances) {
             </div>
           </div>`;
 
-        document.getElementById(
-          instance.id + "." + current_package.id
-        ).innerHTML += entityNode;
+        document.getElementById(instance.id + "." + current_package.id).innerHTML += entityNode;
 
         entity.methods.forEach((method) => {
           /**
@@ -123,16 +229,14 @@ function loadTreeView(instances) {
            * @param {string} method.id - Method ID
            * @param {string} method.type - Method Type
            */
-          let methodNode = `<div id="${instance.id}.${current_package.id}.${
-            entity.id
-          }.${method.id}" class="method hide">
+          let methodNode = `<div id="${instance.id}.${current_package.id}.${entity.id}.${
+            method.id
+          }" class="method hide">
               <div class="circle"></div>
               <p class=${method.type.toLowerCase()}>${method.type}</p>
             </div>`;
 
-          document.getElementById(
-            instance.id + "." + current_package.id + "." + entity.id
-          ).innerHTML += methodNode;
+          document.getElementById(instance.id + "." + current_package.id + "." + entity.id).innerHTML += methodNode;
         });
       });
     });
@@ -144,21 +248,26 @@ function expand(e) {
   let element = e.target;
   let parent = element.parentElement;
 
-  let usedElement = element;
-  // If usedElement does not have an id then it's not a tree element, but a child of a tree element
-  while (!usedElement.hasAttribute("id")) {
-    usedElement = usedElement.parentElement;
+  let nodeElement = element;
+  // If nodeElement does not have an id then it's not a tree element, but a child of a tree element
+  while (!nodeElement.hasAttribute("id")) {
+    nodeElement = nodeElement.parentElement;
+  }
+
+  // If element is an instance node then set current instance
+  if (nodeElement.classList.contains("root")) {
+    setCurrentInstance(nodeElement.id);
   }
 
   // Children[0] is the chevron, Children[1-X] are the sub-elements
-  usedElement.children[0].children[0].classList.toggle("expanded");
-  for (let i = 1; i < usedElement.children.length; i++) {
-    usedElement.children[i].classList.toggle("hide");
+  nodeElement.children[0].children[0].classList.toggle("expanded");
+  for (let i = 1; i < nodeElement.children.length; i++) {
+    nodeElement.children[i].classList.toggle("hide");
   }
 }
 
 // Function: Add New Instance
-function addNewInstance() {
+async function addNewInstance() {
   let instanceName = document.getElementById("new-instance-name").value;
   let instanceUrl = document.getElementById("new-instance-url").value;
 
@@ -167,18 +276,81 @@ function addNewInstance() {
     return;
   }
 
+  if (s_instances.getInstances().findIndex((instance) => instance.text == instanceName) != -1) {
+    alert("An instance with the provided name already exists");
+    return;
+  }
+
   // Check that the instance path is a valid Creatio root path
   let pkgPath = s_instances.validatePath(instanceUrl);
 
   if (pkgPath == "") {
-    alert("Invalid Package Path");
+    alert("Invalid Instance Path");
     return;
   }
 
   // Load here the packages list in order to get a cleaner loadTreeView function
   let pkgList = s_instances.loadPackagesList(pkgPath);
 
-  loadTreeView(s_instances.addInstanceToDB(instanceName, pkgPath, pkgList));
-
+  // Hide Modal and Show Loader
   showNewInstanceModal();
+  showLoader();
+
+  // Add Instance to Instances DB and reload the TreeView
+  await s_instances.addInstanceToDB(instanceName, pkgPath, pkgList);
+
+  loadTreeView(await s_instances.generateInstancesList());
+
+  // Hide Loader
+  showLoader();
+}
+
+// Function: Delete Instance
+async function deleteInstance() {
+  // Hide Modal and Show Loader
+  showDeleteInstanceModal();
+  showLoader();
+
+  // Delete Instance from DB and reload the TreeView
+  await s_instances.deleteInstanceFromDB(current_instance);
+
+  loadTreeView(await s_instances.generateInstancesList());
+
+  // Hide Loader
+  showLoader();
+}
+
+// Function: Edit Instance Info
+async function editInstance() {
+  let new_name = document.getElementById("edit-instance-name").value;
+  let new_path = document.getElementById("edit-instance-url").value;
+
+  if (new_name === "" || new_path === "") {
+    alert("Please fill in all fields");
+    return;
+  }
+
+  if (s_instances.getInstances().findIndex((instance) => instance.text == new_name) != -1) {
+    alert("An instance with the provided name already exists");
+    return;
+  }
+
+  // Check that the instance path is a valid Creatio root path
+  let pkgPath = s_instances.validatePath(new_path);
+
+  if (pkgPath == "") {
+    alert("Invalid Instance Path");
+    return;
+  }
+
+  // Hide Modal and Show Loader
+  showEditInstanceModal();
+  showLoader();
+
+  await s_instances.editInstance(current_instance, new_name, pkgPath);
+
+  document.getElementById(current_instance).children[0].children[1].innerHTML = new_name;
+
+  // Hide Loader
+  showLoader();
 }
