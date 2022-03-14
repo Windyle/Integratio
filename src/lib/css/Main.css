@@ -15,30 +15,39 @@ main {
 #url-container {
   background-color: var(--primary);
   width: 95%;
-  height: 80px;
-  border-radius: 10px;
+  height: 60px;
+  border-radius: 5px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-family: var(--font-family);
 }
 
 #url-container label {
-  margin-bottom: 10px;
+  width: 100px;
+  color: var(--text);
 }
 
 #url-container input {
-  width: 90%;
+  width: calc(100% - 100px - 50px);
   height: 30px;
   border-radius: 5px;
+  border: 1px solid var(--input-background);
+  padding-left: 10px;
+  font-size: 1rem;
+  color: var(--input-text);
+  background-color: var(--input-background);
+}
+
+#url-container input:focus {
+  outline: none;
 }
 
 /* Main Content Container */
 #main-content-container {
   background-color: var(--secondary);
   width: 95%;
-  height: calc(88% - 80px);
-  border-radius: 10px;
+  height: calc(88% - 60px);
+  border-radius: 5px;
   margin-top: 20px;
 }

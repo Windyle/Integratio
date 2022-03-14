@@ -95,9 +95,17 @@
       <!-- Url Container -->
       <div id="url-container">
         <label for="url-showcase">BASE URL</label>
-        <input readonly id="url-showcase" name="url-showcase" />
+        <input readonly id="url-showcase" name="url-showcase" value="{{Host}}/0/odata/Account" />
       </div>
-      <div id="main-content-container"></div>
+      <div id="main-content-container">
+        <!-- Get Method Content Section -->
+        <div id="main-content-get" class="hide">
+          <!-- Dynamic Filter Input List -->
+          <div id="filter-input-list"></div>
+        </div>
+        <!-- Post Method Content Section -->
+        <div id="main-content-post"></div>
+      </div>
     </main>
 
     <!-- Modal Overlay -->

@@ -11,7 +11,7 @@ function createWindow() {
       contextIsolation: false,
     },
     frame: false,
-    minWidth: 600,
+    minWidth: 800,
     minHeight: 600,
   });
 
