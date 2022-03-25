@@ -5,6 +5,7 @@
 const s_instances = require("./lib/js/Instances.Module");
 // Methods Service
 const s_methods = require("./lib/js/Methods.Module");
+// Libraries
 const { ipcRenderer } = require("electron");
 
 // Action Buttons Declaration
