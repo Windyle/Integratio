@@ -19,6 +19,9 @@
     <link href="./lib/css/Modal.css" rel="stylesheet" />
     <!-- Loader Stylesheet -->
     <link href="./lib/css/Loader.css" rel="stylesheet" />
+    <!-- CodeMirror Stylesheet -->
+    <link rel="stylesheet" href="./lib/js/helpers/codemirror-5.65.2/lib/codemirror.css" />
+    <link rel="stylesheet" href="./lib/js/helpers/codemirror-5.65.2/theme/cobalt.css" />
   </head>
   <body>
     <!-- Header Section-->
@@ -106,7 +109,11 @@
         <!-- Post Method Content Section -->
         <div id="main-content-post">
           <div id="main-content-post-left">
-            <div id="body-showcase"></div>
+            <textarea id="body-showcase">
+{
+  "test" : "test"
+}</textarea
+            >
           </div>
           <div id="main-content-post-right"></div>
         </div>
@@ -183,6 +190,8 @@
     </div>
 
     <script src="./lib/js/Nav.js"></script>
+    <script src="./lib/js/helpers/codemirror-5.65.2/lib/codemirror.js"></script>
+    <script src="./lib/js/helpers/codemirror-5.65.2/mode/javascript/javascript.js"></script>
     <script src="./lib/js/Main.js"></script>
   </body>
 </html>

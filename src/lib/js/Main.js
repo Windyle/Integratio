@@ -1,17 +1,23 @@
 "use strict";
 
-// Import Modules:
-// Libraries
-const monaco = require("monaco-editor");
-
 // TEST
+
 // Event Listener for Initialization
 document.addEventListener("DOMContentLoaded", init);
 
 // Initialize the nav
 function init() {
-  monaco.editor.create(document.getElementById("body-showcase"), {
-    value: "function hello() {\n\talert('Hello world!');\n}",
-    language: "javascript",
-  });
+  console.log("Initializing code editor");
+
+  var codeMirrorOptions = {
+    mode: "javascript",
+    lineNumbers: true,
+    lineWrapping: true,
+    theme: "cobalt",
+    json: true,
+  };
+
+  var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("body-showcase"), codeMirrorOptions);
+
+  myCodeMirror.setSize("95%", "95%");
 }
