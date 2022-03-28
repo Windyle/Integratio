@@ -3,8 +3,6 @@
 // Import Modules:
 // Instances Service
 const s_instances = require("./lib/js/Instances.Module");
-// Methods Service
-const s_methods = require("./lib/js/Methods.Module");
 // Libraries
 const { ipcRenderer } = require("electron");
 
@@ -263,7 +261,7 @@ function loadTreeView(instances) {
            */
           let methodNode = `<div id="${instance.id}.${current_package.id}.${entity.id}.${
             method.id
-          }" class="method hide" onclick="methodRoute(${method.type}, ${instance.id}, ${current_package.id}, ${
+          }" class="method hide" onclick="methodRoute('${method.type}', ${instance.id}, ${current_package.id}, ${
             entity.id
           })">
               <div class="circle"></div>
@@ -398,18 +396,20 @@ async function editInstance() {
  * @param {string} entityId
  */
 function methodRoute(type, instanceId, packageId, entityId) {
+  showUrlContainer();
+  showMainContentContainer();
+
   switch (type) {
     case "GET":
-      s_methods.getMethod(instanceId, packageId, entityId);
       break;
     case "POST":
-      s_methods.postMethod(instanceId, packageId, entityId);
+      let entity = s_instances.getEntity(instanceId, packageId, entityId);
+      setUrlContainerValue(entity.name);
+      showPostContainer(s_instances.generateBlankBody(entity.columns));
       break;
     case "PATCH":
-      s_methods.patchMethod(instanceId, packageId, entityId);
       break;
     case "DELETE":
-      s_methods.deleteMethod(instanceId, packageId, entityId);
       break;
   }
 }
