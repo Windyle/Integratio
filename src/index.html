@@ -21,7 +21,7 @@
     <link href="./lib/css/Loader.css" rel="stylesheet" />
     <!-- CodeMirror Stylesheet -->
     <link rel="stylesheet" href="./lib/js/helpers/codemirror-5.65.2/lib/codemirror.css" />
-    <link rel="stylesheet" href="./lib/js/helpers/codemirror-5.65.2/theme/cobalt.css" />
+    <link rel="stylesheet" href="./lib/js/helpers/codemirror-5.65.2/theme/integratio.css" />
   </head>
   <body>
     <!-- Header Section-->
@@ -95,27 +95,48 @@
 
     <!-- Main Section -->
     <main>
+      <!-- Icon Placeholder -->
+      <img alt="Icon" id="main-placeholder-icon" class="placeholder-icon" src="../static/icon-placeholder.png" />
+
       <!-- Url Container -->
       <div id="url-container">
         <label for="url-showcase">BASE URL</label>
         <input readonly id="url-showcase" name="url-showcase" value="{{Host}}/0/odata/Account" />
       </div>
+
       <div id="main-content-container">
         <!-- Get Method Content Section -->
-        <div id="main-content-get" class="hide">
+        <div id="main-content-get">
           <!-- Dynamic Filter Input List -->
           <div id="filter-input-list"></div>
         </div>
+
         <!-- Post Method Content Section -->
         <div id="main-content-post">
+          <!-- CodeMirror Container -->
           <div id="main-content-post-left">
-            <textarea id="body-showcase">
-{
-  "test" : "test"
-}</textarea
-            >
+            <textarea id="body-showcase"></textarea>
+            <div class="actions">
+              <div id="random-body-filler" class="button">Randomize</div>
+              <div id="compare-body" class="button">Compare</div>
+            </div>
           </div>
-          <div id="main-content-post-right"></div>
+          <!-- Bodies Manager Container -->
+          <div id="main-content-post-right">
+            <!-- Save Body Section -->
+            <div id="save-body-section">
+              <div class="header">Save Body</div>
+              <input id="save-body-title-input" placeholder="Title" />
+              <div class="button" onclick="saveBody()">Save</div>
+            </div>
+            <!-- Border -->
+            <div class="hr"></div>
+            <!-- Bodies List -->
+            <div id="bodies-list">
+              <div class="header">BODIES</div>
+              <div class="list" id="bodies-list-content"></div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -189,9 +210,9 @@
       </div>
     </div>
 
-    <script src="./lib/js/Nav.js"></script>
     <script src="./lib/js/helpers/codemirror-5.65.2/lib/codemirror.js"></script>
     <script src="./lib/js/helpers/codemirror-5.65.2/mode/javascript/javascript.js"></script>
     <script src="./lib/js/Main.js"></script>
+    <script src="./lib/js/Nav.js"></script>
   </body>
 </html>

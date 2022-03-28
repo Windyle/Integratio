@@ -10,8 +10,6 @@ const { ipcRenderer } = require("electron");
 
 // Action Buttons Declaration
 const actions = [
-  { id: "random-fill", text: "RANDOM BODY FILLER", onclick: "" },
-  { id: "body-type-compare", text: "BODY VALIDATOR", onclick: "" },
   { id: "export-postman", text: "EXPORT FOR POSTMAN", onclick: "" },
   { id: "export-structure", text: "EXPORT DATA STRUCTURE", onclick: "" },
 ];
