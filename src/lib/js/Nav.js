@@ -169,7 +169,7 @@ function setCurrentInstance(instanceId) {
   current_instance = instanceId;
 
   // Get Instance Name
-  let instanceName = document.getElementById(instanceId).innerText;
+  let instanceName = document.getElementById(instanceId).children[0].children[1].innerText;
 
   // Update instance display in header
   document.getElementById("instance-display").innerHTML = instanceName;
@@ -265,7 +265,7 @@ function loadTreeView(instances) {
             method.id
           }" class="method hide" onclick="methodRoute(${method.type}, ${instance.id}, ${current_package.id}, ${
             entity.id
-          })>
+          })">
               <div class="circle"></div>
               <p class=${method.type.toLowerCase()}>${method.type}</p>
             </div>`;
