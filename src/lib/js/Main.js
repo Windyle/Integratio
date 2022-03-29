@@ -32,8 +32,10 @@ function showPostContainer(value = "") {
   if (document.getElementById("main-content-post").style.display == "none") {
     initBodyCodeEditor(value);
     document.getElementById("main-content-post").style.display = "grid";
-  } else {
+  } else if (value === "") {
     document.getElementById("main-content-post").style.display = "none";
+  } else {
+    initBodyCodeEditor(value);
   }
 }
 
@@ -53,6 +55,9 @@ function setUrlContainerValue(entity) {
 
 // Function: Initialize Body Code Editor
 async function initBodyCodeEditor(value = "") {
+  if (document.getElementsByClassName("CodeMirror")[0] !== undefined)
+    document.getElementsByClassName("CodeMirror")[0].remove();
+
   var codeMirrorOptions = {
     mode: "javascript",
     lineNumbers: false,

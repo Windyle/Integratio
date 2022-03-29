@@ -296,18 +296,10 @@ module.exports = {
     };
 
     // Populate entity with entity information
-    let obj_entity =
-      global_instances[global_instances.findIndex((instance) => instance.id == instanceId)].packages[
-        global_instances[global_instances.findIndex((instance) => instance.id == instanceId)].packages.findIndex(
-          (pkg) => pkg.id == packageId
-        )
-      ].entities[
-        global_instances[global_instances.findIndex((instance) => instance.id == instanceId)].packages[
-          global_instances[global_instances.findIndex((instance) => instance.id == instanceId)].packages.findIndex(
-            (pkg) => pkg.id == packageId
-          )
-        ].entities.findIndex((entity) => entity.id == entityId)
-      ];
+    let obj_entity = global_instances
+      .filter((instance) => instance.id == instanceId)[0]
+      .packages.filter((package) => package.id == packageId)[0]
+      .entities.filter((entity) => entity.id == entityId);
 
     entity.name = obj_entity.text;
 
@@ -334,7 +326,7 @@ module.exports = {
       body += `\n  "${column.name}" : ${blanks[column.type]},`;
     });
 
-    body += "\n}";
+    body = body.slice(0, -1) + "\n}";
 
     return body;
   },

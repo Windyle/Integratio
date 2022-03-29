@@ -14,6 +14,7 @@ const actions = [
 
 // Process Variables
 let current_instance;
+let current_entity;
 
 // Event Listener for Initialization
 document.addEventListener("DOMContentLoaded", init);
@@ -403,6 +404,9 @@ function methodRoute(type, instanceId, packageId, entityId) {
     case "GET":
       break;
     case "POST":
+      if (document.getElementById("main-content-post").style.display == "grid" && entityId === current_entity) return;
+
+      current_entity = entityId;
       let entity = s_instances.getEntity(instanceId, packageId, entityId);
       setUrlContainerValue(entity.name);
       showPostContainer(s_instances.generateBlankBody(entity.columns));
