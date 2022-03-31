@@ -301,10 +301,10 @@ module.exports = {
       .packages.filter((pckg) => pckg.id == packageId)[0]
       .entities.filter((entity) => entity.id == entityId);
 
-    entity.name = obj_entity.text;
+    entity.name = obj_entity[0].text;
 
     // Get entity columns
-    entity.columns = obj_entity.columns;
+    entity.columns = obj_entity[0].columns;
 
     return entity;
   },

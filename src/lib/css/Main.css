@@ -89,7 +89,7 @@ main .button:hover {
   height: 100%;
   display: grid;
   grid-template-columns: 60% 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: 100%;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   font-family: var(--font-family);

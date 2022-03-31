@@ -59,11 +59,10 @@ async function initBodyCodeEditor(value = "") {
     document.getElementsByClassName("CodeMirror")[0].remove();
 
   var codeMirrorOptions = {
-    mode: "javascript",
+    mode: "application/ld+json",
     lineNumbers: false,
     lineWrapping: true,
-    theme: "integratio",
-    json: true,
+    theme: "dracula",
   };
 
   let editor = await CodeMirror.fromTextArea(document.getElementById("body-showcase"), codeMirrorOptions);
