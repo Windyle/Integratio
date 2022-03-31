@@ -298,7 +298,7 @@ module.exports = {
     // Populate entity with entity information
     let obj_entity = global_instances
       .filter((instance) => instance.id == instanceId)[0]
-      .packages.filter((package) => package.id == packageId)[0]
+      .packages.filter((pckg) => pckg.id == packageId)[0]
       .entities.filter((entity) => entity.id == entityId);
 
     entity.name = obj_entity.text;
