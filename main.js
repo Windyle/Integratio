@@ -1,4 +1,4 @@
-const { app, BrowserWindow, globalShortcut } = require("electron");
+const { app, BrowserWindow, ipcMain, globalShortcut } = require("electron");
 
 function createWindow() {
   // Create the browser window.
@@ -10,6 +10,9 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
     },
+    frame: false,
+    minWidth: 800,
+    minHeight: 600,
   });
 
   // and load the index.html of the app.
@@ -67,3 +70,22 @@ app.on("activate", function () {
 // } catch (err) {
 //   throw err;
 // }
+
+// Close app event listener
+ipcMain.on("close-app", (event) => {
+  event.preventDefault();
+  app.exit();
+});
+
+// Reduce to icon event listener
+ipcMain.on("minimize-app", (event) => {
+  event.preventDefault();
+  mainWindow.minimize();
+});
+
+// Maximize event listener
+ipcMain.on("maximize-app", (event) => {
+  event.preventDefault();
+  if (mainWindow.isMaximized()) mainWindow.unmaximize();
+  else mainWindow.maximize();
+});

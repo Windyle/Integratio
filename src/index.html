@@ -19,6 +19,9 @@
     <link href="./lib/css/Modal.css" rel="stylesheet" />
     <!-- Loader Stylesheet -->
     <link href="./lib/css/Loader.css" rel="stylesheet" />
+    <!-- CodeMirror Stylesheet -->
+    <link rel="stylesheet" href="./lib/js/helpers/codemirror-5.65.2/lib/codemirror.css" />
+    <link rel="stylesheet" href="./lib/js/helpers/codemirror-5.65.2/theme/integratio.css" />
   </head>
   <body>
     <!-- Header Section-->
@@ -27,12 +30,17 @@
       <!-- Instance Display - Top Left Corner -->
       <h2 class="header" id="instance-display">[No Instance Selected]</h2>
       <!-- Help Button - Top Right Corner -->
-      <img
-        alt="Help Button"
-        class="help"
-        src="../static/help-circle.svg"
-        onclick="window.open('https://github.com/Windyle/Integratio/issues', '_blank').focus()"
-      />
+      <img alt="Help Button" class="help" src="../static/help-circle.svg" onclick="openIssuePage()" />
+      <!-- Window Action Button - Top Right Corner -->
+      <div class="window-action" id="minimize-window" onclick="minimizeWindow()">
+        <img src="../static/minus.svg" />
+      </div>
+      <div class="window-action" id="maximize-window" onclick="maximizeWindow()">
+        <img src="../static/maximize.svg" />
+      </div>
+      <div class="window-action" id="close-window" onclick="closeWindow()">
+        <img src="../static/close.svg" />
+      </div>
     </header>
 
     <!-- Nav Section -->
@@ -86,7 +94,52 @@
     </nav>
 
     <!-- Main Section -->
-    <main></main>
+    <main>
+      <!-- Icon Placeholder -->
+      <img alt="Icon" id="main-placeholder-icon" class="placeholder-icon" src="../static/icon-placeholder.png" />
+
+      <!-- Url Container -->
+      <div id="url-container">
+        <label for="url-showcase">BASE URL</label>
+        <input readonly id="url-showcase" name="url-showcase" />
+      </div>
+
+      <div id="main-content-container">
+        <!-- Get Method Content Section -->
+        <div id="main-content-get">
+          <!-- Dynamic Filter Input List -->
+          <div id="filter-input-list"></div>
+        </div>
+
+        <!-- Post Method Content Section -->
+        <div id="main-content-post">
+          <!-- CodeMirror Container -->
+          <div id="main-content-post-left">
+            <textarea id="body-showcase"></textarea>
+            <div class="actions">
+              <div id="random-body-filler" class="button">Randomize</div>
+              <div id="validate-body" class="button">Validate</div>
+            </div>
+          </div>
+          <!-- Bodies Manager Container -->
+          <div id="main-content-post-right">
+            <!-- Save Body Section -->
+            <div id="save-body-section">
+              <div class="header">Save Body</div>
+              <input id="save-body-title-input" placeholder="Title" />
+              <div class="button" onclick="saveBody()">Save</div>
+            </div>
+            <!-- Border -->
+            <div class="hr"></div>
+            <!-- Bodies List -->
+            <div id="bodies-list">
+              <div class="header">BODIES</div>
+              <div class="list" id="bodies-list-content"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
 
     <!-- Modal Overlay -->
     <div id="overlay"></div>
@@ -157,6 +210,9 @@
       </div>
     </div>
 
+    <script src="./lib/js/helpers/codemirror-5.65.2/lib/codemirror.js"></script>
+    <script src="./lib/js/helpers/codemirror-5.65.2/mode/javascript/javascript.js"></script>
+    <script src="./lib/js/Main.js"></script>
     <script src="./lib/js/Nav.js"></script>
   </body>
 </html>

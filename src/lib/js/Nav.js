@@ -1,19 +1,20 @@
 "use strict";
 
-// Import Module: Instance Manager
-let s_instances = require("./lib/js/Instances.Module");
+// Import Modules:
+// Instances Service
+const s_instances = require("./lib/js/Instances.Module");
+// Libraries
+const { ipcRenderer } = require("electron");
 
 // Action Buttons Declaration
 const actions = [
-  { id: "sync", text: "SYNC INSTANCE" },
-  { id: "random-fill", text: "RANDOM BODY FILLER" },
-  { id: "body-type-compare", text: "BODY VALIDATOR" },
-  { id: "export-postman", text: "EXPORT FOR POSTMAN" },
-  { id: "export-structure", text: "EXPORT DATA STRUCTURE" },
+  { id: "export-postman", text: "EXPORT FOR POSTMAN", onclick: "" },
+  { id: "export-structure", text: "EXPORT DATA STRUCTURE", onclick: "" },
 ];
 
 // Process Variables
 let current_instance;
+let current_entity;
 
 // Event Listener for Initialization
 document.addEventListener("DOMContentLoaded", init);
@@ -25,7 +26,7 @@ async function init() {
 
   // Generate Buttons from actions array and append to actions section
   actions.forEach((action) => {
-    let button = `<div id="${action.id}" class="button disabled">${action.text}</div>`;
+    let button = `<div id="${action.id}" class="button disabled" onclick="${action.onclick}">${action.text}</div>`;
 
     document.getElementById("actions").innerHTML += button;
   });
@@ -53,6 +54,24 @@ async function init() {
   showLoader();
   loadTreeView(await s_instances.generateInstancesList());
   showLoader();
+}
+
+// Window Actions Functions
+function closeWindow() {
+  ipcRenderer.send("close-app");
+}
+
+function maximizeWindow() {
+  ipcRenderer.send("maximize-app");
+}
+
+function minimizeWindow() {
+  ipcRenderer.send("minimize-app");
+}
+
+// Function: Open Issue Page on Help Button click
+function openIssuePage() {
+  require("electron").shell.openExternal("https://github.com/Windyle/Integratio/issues");
 }
 
 // Function: Show / Hide Search Bar
@@ -149,7 +168,7 @@ function setCurrentInstance(instanceId) {
   current_instance = instanceId;
 
   // Get Instance Name
-  let instanceName = document.getElementById(instanceId).innerText;
+  let instanceName = document.getElementById(instanceId).children[0].children[1].innerText;
 
   // Update instance display in header
   document.getElementById("instance-display").innerHTML = instanceName;
@@ -166,6 +185,18 @@ function setCurrentInstance(instanceId) {
       }
     }
   }
+
+  // Enable Actions
+  let actions = [];
+
+  enableActions(actions);
+}
+
+// Function: Enable Action Buttons
+function enableActions(actions) {
+  actions.forEach((id) => {
+    document.getElementById(id).classList.remove("disabled");
+  });
 }
 
 // Function: Load Tree View
@@ -231,7 +262,9 @@ function loadTreeView(instances) {
            */
           let methodNode = `<div id="${instance.id}.${current_package.id}.${entity.id}.${
             method.id
-          }" class="method hide">
+          }" class="method hide" onclick="methodRoute('${method.type}', ${instance.id}, ${current_package.id}, ${
+            entity.id
+          })">
               <div class="circle"></div>
               <p class=${method.type.toLowerCase()}>${method.type}</p>
             </div>`;
@@ -353,4 +386,34 @@ async function editInstance() {
 
   // Hide Loader
   showLoader();
+}
+
+/**
+ * Method Route
+ *
+ * @param {string} type // GET, POST, PATCH, DELETE
+ * @param {string} instanceId
+ * @param {string} packageId
+ * @param {string} entityId
+ */
+function methodRoute(type, instanceId, packageId, entityId) {
+  showUrlContainer();
+  showMainContentContainer();
+
+  switch (type) {
+    case "GET":
+      break;
+    case "POST":
+      if (document.getElementById("main-content-post").style.display == "grid" && entityId === current_entity) return;
+
+      current_entity = entityId;
+      let entity = s_instances.getEntity(instanceId, packageId, entityId);
+      setUrlContainerValue(entity.name);
+      showPostContainer(s_instances.generateBlankBody(entity.columns));
+      break;
+    case "PATCH":
+      break;
+    case "DELETE":
+      break;
+  }
 }

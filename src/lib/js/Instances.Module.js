@@ -5,7 +5,7 @@ const fs = require("fs");
 const sqlite3 = require("sqlite3").verbose();
 
 // Import Maps
-const { types } = require("../maps/Types.Map");
+const { types, blanks } = require("../maps/Types.Map");
 const { inheritedColumns } = require("../maps/InheritedColumns.Map");
 
 let global_instances = [];
@@ -284,6 +284,51 @@ module.exports = {
     }
 
     return fullPath;
+  },
+  getEntity: (instanceId, packageId, entityId) => {
+    // Declare entity template
+    let entity = {
+      id: entityId,
+      name: "",
+      packageId: packageId,
+      instanceId: instanceId,
+      columns: [],
+    };
+
+    // Populate entity with entity information
+    let obj_entity = global_instances
+      .filter((instance) => instance.id == instanceId)[0]
+      .packages.filter((package) => package.id == packageId)[0]
+      .entities.filter((entity) => entity.id == entityId);
+
+    entity.name = obj_entity.text;
+
+    // Get entity columns
+    entity.columns = obj_entity.columns;
+
+    return entity;
+  },
+  generateBlankBody: (columns) => {
+    let body = "{";
+
+    columns.forEach((column) => {
+      if (
+        column.name === "Id" ||
+        column.name === "CreatedOn" ||
+        column.name === "CreatedBy" ||
+        column.name === "ModifiedOn" ||
+        column.name === "ModifiedBy" ||
+        column.name === "ProcessListeners"
+      )
+        return;
+
+      // Add column to body
+      body += `\n  "${column.name}" : ${blanks[column.type]},`;
+    });
+
+    body = body.slice(0, -1) + "\n}";
+
+    return body;
   },
 };
 

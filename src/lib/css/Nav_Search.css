@@ -27,7 +27,7 @@
 }
 
 #search-container input::placeholder {
-  color: var(--primary);
+  color: var(--input-placeholder);
 }
 
 /* Close Button */
