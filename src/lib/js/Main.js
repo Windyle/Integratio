@@ -60,7 +60,7 @@ async function initBodyCodeEditor(value = "") {
 
   var codeMirrorOptions = {
     mode: "application/ld+json",
-    lineNumbers: false,
+    lineNumbers: true,
     lineWrapping: true,
     theme: "dracula",
   };
