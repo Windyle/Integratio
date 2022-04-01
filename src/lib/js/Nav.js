@@ -12,10 +12,6 @@ const actions = [
   { id: "export-structure", text: "EXPORT DATA STRUCTURE", onclick: "" },
 ];
 
-// Process Variables
-let current_instance;
-let current_entity;
-
 // Event Listener for Initialization
 document.addEventListener("DOMContentLoaded", init);
 
@@ -404,12 +400,13 @@ function methodRoute(type, instanceId, packageId, entityId) {
     case "GET":
       break;
     case "POST":
-      if (document.getElementById("main-content-post").style.display == "grid" && entityId === current_entity) return;
+      if (document.getElementById("main-content-post").style.display == "grid" && entityId === current_entity_id)
+        return;
 
-      current_entity = entityId;
-      let entity = s_instances.getEntity(instanceId, packageId, entityId);
-      setUrlContainerValue(entity.name);
-      showPostContainer(s_instances.generateBlankBody(entity.columns));
+      current_entity_id = entityId;
+      current_entity = s_instances.getEntity(instanceId, packageId, entityId);
+      setUrlContainerValue(current_entity.name);
+      showPostContainer(s_instances.generateBlankBody(current_entity.columns));
       break;
     case "PATCH":
       break;

@@ -117,8 +117,9 @@
           <div id="main-content-post-left">
             <textarea id="body-showcase"></textarea>
             <div class="actions">
-              <div id="random-body-filler" class="button">Randomize</div>
+              <div id="random-body-filler" class="button" onclick="randomizeCurrentEntityBody()">Randomize</div>
               <div id="validate-body" class="button">Validate</div>
+              <div id="reset-body" class="button">Reset</div>
             </div>
           </div>
           <!-- Bodies Manager Container -->
@@ -210,6 +211,7 @@
       </div>
     </div>
 
+    <script src="./lib/js/Variables.js"></script>
     <script src="./lib/js/helpers/codemirror-5.65.2/lib/codemirror.js"></script>
     <script src="./lib/js/helpers/codemirror-5.65.2/mode/javascript/javascript.js"></script>
     <script src="./lib/js/Main.js"></script>

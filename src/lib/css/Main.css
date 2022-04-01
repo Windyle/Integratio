@@ -117,8 +117,13 @@ main .button:hover {
   height: 50px;
 }
 
-#main-content-post-left .actions > div:first-child {
+#main-content-post-left .actions > div {
   margin-right: 20px;
+  user-select: none;
+}
+
+#main-content-post-left .actions > div:last-child {
+  margin-right: 0px;
 }
 
 #main-content-post-right {

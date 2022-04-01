@@ -1,5 +1,8 @@
 "use strict";
 
+// Import Dependencies
+const { randomizeValue } = require("./lib/js/helpers/Randomizer");
+
 // Event Listener for Initialization
 document.addEventListener("DOMContentLoaded", init);
 
@@ -65,7 +68,22 @@ async function initBodyCodeEditor(value = "") {
     theme: "dracula",
   };
 
-  let editor = await CodeMirror.fromTextArea(document.getElementById("body-showcase"), codeMirrorOptions);
+  editor = await CodeMirror.fromTextArea(document.getElementById("body-showcase"), codeMirrorOptions);
   editor.setValue(value);
   editor.setSize("95%", "85%");
+}
+
+// Function: Randomize Current Entity's Body
+function randomizeCurrentEntityBody() {
+  let current_body = JSON.parse(editor.getValue());
+  let random_body = {};
+
+  Object.keys(current_body).forEach((key) => {
+    let column = current_entity.columns.find((column) => column.name == key);
+    if (column === undefined) return;
+
+    random_body[key] = randomizeValue(column.type);
+  });
+
+  editor.setValue(JSON.stringify(random_body, null, 2));
 }
