@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Instance Sync
 - Post Request to Creatio with "blank" base url of the selected entity
   - Random Body Filler
+- Save Body list for the selected entity
 - Get Filters generator
 - Get Filters local save for easier access
 - Populated lookup for picking inherited columns from metadata for the following objects:
