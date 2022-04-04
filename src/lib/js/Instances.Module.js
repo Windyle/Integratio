@@ -308,6 +308,13 @@ module.exports = {
 
     return entity;
   },
+  getMethodId: (instanceId, packageId, entityId, methodType) => {
+    return global_instances
+      .filter((instance) => instance.id == instanceId)[0]
+      .packages.filter((pckg) => pckg.id == packageId)[0]
+      .entities.filter((entity) => entity.id == entityId)[0]
+      .methods.filter((method) => method.type == methodType)[0].id;
+  },
   generateBlankBody: (columns) => {
     let body = "{";
 
@@ -329,6 +336,66 @@ module.exports = {
     body = body.slice(0, -1) + "\n}";
 
     return body;
+  },
+  saveBody: (body, title, methodId) => {
+    return new Promise(function (resolve) {
+      // Open DB connection
+      let db = new sqlite3.Database("./src/intdb.db");
+
+      // Delete Instance and linked entities
+      db.serialize(() => {
+        db.run("INSERT INTO PostBody(Body, Title, MethodId) VALUES(?, ?, ?)", [body, title, methodId], (err) => {
+          if (err) {
+            return console.error(err.message);
+          }
+
+          resolve();
+        });
+      });
+    });
+  },
+  deletePostBody: (bodyId) => {
+    return new Promise(function (resolve) {
+      // Open DB connection
+      let db = new sqlite3.Database("./src/intdb.db");
+
+      // Delete Instance and linked entities
+      db.serialize(() => {
+        db.run("DELETE FROM PostBody WHERE Id = ?", [bodyId], (err) => {
+          if (err) {
+            return console.error(err.message);
+          }
+
+          resolve();
+        });
+      });
+    });
+  },
+  getPostBodies: (methodId) => {
+    return new Promise(function (resolve) {
+      // Open DB connection
+      let db = new sqlite3.Database("./src/intdb.db");
+
+      let rows = [];
+
+      // Delete Instance and linked entities
+      db.serialize(() => {
+        db.each(
+          "SELECT Id, Body, Title FROM PostBody WHERE MethodId = ?",
+          [methodId],
+          (err, row) => {
+            if (err) {
+              return console.error(err.message);
+            }
+
+            rows.push(row);
+          },
+          () => {
+            resolve(rows);
+          }
+        );
+      });
+    });
   },
 };
 

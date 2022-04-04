@@ -14,6 +14,7 @@
     <link href="./lib/css/Nav_Search.css" rel="stylesheet" />
     <!-- Main Stylesheets -->
     <link href="./lib/css/Main.css" rel="stylesheet" />
+    <link href="./lib/css/Main_Post.css" rel="stylesheet" />
     <!-- Modals Stylesheet -->
     <link href="./lib/css/Modal.css" rel="stylesheet" />
     <!-- Loader Stylesheet -->
@@ -114,7 +115,7 @@
             <textarea id="body-showcase"></textarea>
             <div class="actions">
               <div id="random-body-filler" class="button" onclick="randomizeCurrentEntityBody()">Randomize</div>
-              <div id="validate-body" class="button">Validate</div>
+              <div id="validate-body" class="button disabled">Validate</div>
               <div id="reset-body" class="button" onclick="resetCurrentEntityBody()">Reset</div>
             </div>
           </div>
@@ -123,20 +124,33 @@
             <!-- Save Body Section -->
             <div id="save-body-section">
               <div class="header">Save Body</div>
-              <input id="save-body-title-input" placeholder="Title" />
-              <div class="button" onclick="saveBody()">Save</div>
+              <input id="save-post-body-title-input" placeholder="Title" />
+              <div class="button" onclick="savePostBody()">Save</div>
             </div>
             <!-- Border -->
             <div class="hr"></div>
             <!-- Bodies List -->
             <div id="bodies-list">
               <div class="header">BODIES</div>
-              <div class="list" id="bodies-list-content"></div>
+              <div class="list" id="post-bodies-list-content"></div>
             </div>
           </div>
         </div>
       </div>
     </main>
+
+    <!-- Post Body Delete Dropdown -->
+    <div class="dropdown" id="post-body-dropdown" onmouseleave="postBodyDropdownHide()">
+      <!-- Dropdown Menu Option: Delete -->
+      <div class="option" data-action="delete" onclick="deletePostBody()">
+        <div class="icon" radius="true">
+          <img alt="icon" src="../static/trash-2.svg" />
+        </div>
+        <div class="text">
+          <p>Delete</p>
+        </div>
+      </div>
+    </div>
 
     <!-- Modal Overlay -->
     <div id="overlay"></div>

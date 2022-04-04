@@ -9,12 +9,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
 }
 
 #splashscreen img {
   width: 10%;
   animation: pulse-animation 2s infinite;
   border-radius: 15%;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 @keyframes pulse-animation {

@@ -55,6 +55,10 @@ async function init() {
   showPostContainer();
   showGetContainer();
 
+  // Initialize Post Bodies List Dropdown
+  console.info("- Initialize Post Bodies List Dropdown");
+  document.getElementById("post-body-dropdown").style.display = "none";
+
   setTimeout(() => {
     document.getElementById("splashscreen").remove();
   }, 2000);
@@ -79,11 +83,13 @@ function showMainContentContainer() {
 function showPostContainer(value = "") {
   if (document.getElementById("main-content-post").style.display == "none") {
     initBodyCodeEditor(value);
+    refreshPostBodiesList();
     document.getElementById("main-content-post").style.display = "grid";
   } else if (value === "") {
     document.getElementById("main-content-post").style.display = "none";
   } else {
     initBodyCodeEditor(value);
+    refreshPostBodiesList();
   }
 }
 
@@ -120,7 +126,15 @@ async function initBodyCodeEditor(value = "") {
 
 // Function: Randomize Current Entity's Body
 function randomizeCurrentEntityBody() {
-  let current_body = JSON.parse(editor.getValue());
+  let current_body;
+
+  try {
+    current_body = JSON.parse(editor.getValue());
+  } catch (e) {
+    alert("The current content is not a valid JSON body!");
+    return;
+  }
+
   let random_body = {};
 
   Object.keys(current_body).forEach((key) => {
@@ -133,7 +147,95 @@ function randomizeCurrentEntityBody() {
   editor.setValue(JSON.stringify(random_body, null, 2));
 }
 
-// Function: Reset Current Entity's Body to blank
+// Function: Reset Current Entity's Body to blank for Post method
 function resetCurrentEntityBody() {
   editor.setValue(s_instances.generateBlankBody(current_entity.columns));
+}
+
+// Function: Save Current Body for Post Method
+async function savePostBody() {
+  // Get title
+  let title = document.getElementById("save-post-body-title-input").value;
+
+  // Title must be provided
+  if (title === undefined || title === "") {
+    alert("Please provide a title for the body.");
+    return;
+  }
+
+  // Get body from CodeMirror editor
+  let body = editor.getValue();
+
+  // Save Body
+  await s_instances.saveBody(body, title, current_method_id);
+
+  // Reset Title
+  document.getElementById("save-post-body-title-input").value = "";
+
+  refreshPostBodiesList();
+}
+
+// Function: Delete Post Body
+async function deletePostBody() {
+  await s_instances.deletePostBody(current_body_id);
+
+  postBodyDropdownHide();
+  refreshPostBodiesList();
+}
+
+// Function: Load Post Body
+function loadPostBody(e) {
+  // Retrieve node element
+  let element = e.target;
+
+  let nodeElement = element;
+  // If nodeElement does not have an id then it's not a tree element, but a child of a tree element
+  while (!nodeElement.hasAttribute("id") || !nodeElement.id.startsWith("body")) {
+    nodeElement = nodeElement.parentElement;
+  }
+
+  editor.setValue(nodeElement.getAttribute("body-content"));
+}
+
+// Function: Post Bodies List Dropdown Menu from Right Click
+function postBodyDropdownShow(e) {
+  // Check if user pressed right mouse button
+  if (e.button == 2) {
+    // Retrieve node element
+    let element = e.target;
+
+    let nodeElement = element;
+    // If nodeElement does not have an id then it's not a tree element, but a child of a tree element
+    while (!nodeElement.hasAttribute("id") || !nodeElement.id.startsWith("body")) {
+      nodeElement = nodeElement.parentElement;
+    }
+
+    current_body_id = nodeElement.id.split("-")[1];
+
+    // Show dropdown with Edit and Delete options
+    let dropdown = document.getElementById("post-body-dropdown");
+    dropdown.style.display = "flex";
+    dropdown.style.left = e.clientX / 1.005 + "px";
+    dropdown.style.top = e.clientY / 1.005 + "px";
+  }
+}
+
+function postBodyDropdownHide() {
+  let dropdown = document.getElementById("post-body-dropdown");
+  dropdown.style.display = "none";
+}
+
+// Function: Refresh Bodies List for Current Entity's Post Method
+async function refreshPostBodiesList() {
+  document.getElementById("post-bodies-list-content").innerHTML = "";
+
+  let bodies = await s_instances.getPostBodies(current_method_id);
+
+  bodies.forEach((body) => {
+    let bodyRow = `<div class="body-row" id="body-${body.Id}" onmousedown="postBodyDropdownShow(event)" onclick="loadPostBody(event)" body-content='${body.Body}'>
+      <p>${body.Title}</p>
+    </div>`;
+
+    document.getElementById("post-bodies-list-content").innerHTML += bodyRow;
+  });
 }

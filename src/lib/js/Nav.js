@@ -114,8 +114,8 @@ function treeviewDropdownShow(e) {
     // Show dropdown with Edit and Delete options
     let dropdown = document.getElementById("treeview-dropdown");
     dropdown.style.display = "flex";
-    dropdown.style.left = e.clientX + "px";
-    dropdown.style.top = e.clientY / 1.2 + "px";
+    dropdown.style.left = e.clientX / 1.1 + "px";
+    dropdown.style.top = e.clientY / 1.5 + "px";
 
     // Set current instance
     setCurrentInstance(nodeElement.id);
@@ -372,6 +372,7 @@ function methodRoute(type, instanceId, packageId, entityId) {
 
       current_entity_id = entityId;
       current_entity = s_instances.getEntity(instanceId, packageId, entityId);
+      current_method_id = s_instances.getMethodId(instanceId, packageId, entityId, "POST");
       setUrlContainerValue(current_entity.name);
       showPostContainer(s_instances.generateBlankBody(current_entity.columns));
       break;
