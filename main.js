@@ -35,10 +35,6 @@ function createWindow() {
     mainWindow = null;
   });
 
-  globalShortcut.register("f5", function () {
-    mainWindow.reload();
-  });
-
   globalShortcut.register("CommandOrControl+Shift+I", function () {
     mainWindow.webContents.openDevTools();
   });

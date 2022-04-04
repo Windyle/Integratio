@@ -1,0 +1,152 @@
+/* POST */
+#main-content-post {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 60% 1fr;
+  grid-template-rows: 100%;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  font-family: var(--font-family);
+}
+
+#main-content-post-left,
+#main-content-post-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#main-content-post-left {
+  grid-area: 1 / 1 / 2 / 2;
+  padding-left: 20px;
+}
+
+#main-content-post-left .actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+}
+
+#main-content-post-left .actions > div {
+  margin-right: 20px;
+  user-select: none;
+}
+
+#main-content-post-left .actions > div:last-child {
+  margin-right: 0px;
+}
+
+#main-content-post-right {
+  grid-area: 1 / 2 / 2 / 3;
+}
+
+#save-body-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#save-body-section .header {
+  width: 100px;
+  color: var(--text);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#save-body-section #save-post-body-title-input {
+  width: calc(90% - 100px - 50px);
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid var(--input-background);
+  padding-left: 10px;
+  font-size: 1rem;
+  color: var(--input-text);
+  background-color: var(--input-background);
+  margin: 10px 0px;
+}
+
+#save-body-section #save-post-body-title-input:focus {
+  outline: none;
+}
+
+#save-body-section #save-post-body-title-input::placeholder {
+  color: var(--input-placeholder);
+}
+
+#save-body-section .save-body-button {
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: var(--primary);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+#bodies-list {
+  width: 100%;
+  height: calc(100% - 250px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-family);
+}
+
+#bodies-list .header {
+  width: 100px;
+  color: var(--text);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Post Bodies List */
+#bodies-list .list {
+  width: 80%;
+  height: calc(100% - 30px);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  background-color: var(--darker-secondary);
+  margin-top: 20px;
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#bodies-list .list > div {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  border-bottom: 1px solid var(--secondary);
+}
+
+#bodies-list .list > div:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+#bodies-list .list > div > p {
+  margin: 0 20px;
+  color: var(--text);
+  user-select: none;
+}
+
+/* Post Body Dropdown */
+.dropdown .option[data-action="delete"]:hover {
+  background-color: var(--danger) !important;
+}

@@ -18,6 +18,7 @@
   "dependencies": {
     "electron": "^17.1.0",
     "electron-reloader": "^1.2.3",
+    "random-text-generator": "^3.2.1",
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {

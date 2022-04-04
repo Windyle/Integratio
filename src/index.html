@@ -10,25 +10,27 @@
     <link href="./lib/css/Header.css" rel="stylesheet" />
     <!-- Nav Stylesheets -->
     <link href="./lib/css/Nav.css" rel="stylesheet" />
-    <link href="./lib/css/Nav_Actions.css" rel="stylesheet" />
     <link href="./lib/css/Nav_Treeview.css" rel="stylesheet" />
     <link href="./lib/css/Nav_Search.css" rel="stylesheet" />
     <!-- Main Stylesheets -->
     <link href="./lib/css/Main.css" rel="stylesheet" />
+    <link href="./lib/css/Main_Post.css" rel="stylesheet" />
     <!-- Modals Stylesheet -->
     <link href="./lib/css/Modal.css" rel="stylesheet" />
     <!-- Loader Stylesheet -->
     <link href="./lib/css/Loader.css" rel="stylesheet" />
+    <!-- Splashscreen Stylesheet -->
+    <link href="./lib/css/Splashscreen.css" rel="stylesheet" />
     <!-- CodeMirror Stylesheet -->
     <link rel="stylesheet" href="./lib/js/helpers/codemirror-5.65.2/lib/codemirror.css" />
-    <link rel="stylesheet" href="./lib/js/helpers/codemirror-5.65.2/theme/integratio.css" />
+    <link rel="stylesheet" href="./lib/js/helpers/codemirror-5.65.2/theme/dracula.css" />
   </head>
   <body>
     <!-- Header Section-->
     <header>
       <img alt="Logo" class="logo" src="../static/icon-borderless.svg" />
       <!-- Instance Display - Top Left Corner -->
-      <h2 class="header" id="instance-display">[No Instance Selected]</h2>
+      <h2 class="header" id="title-display">INTEGRATIO</h2>
       <!-- Help Button - Top Right Corner -->
       <img alt="Help Button" class="help" src="../static/help-circle.svg" onclick="openIssuePage()" />
       <!-- Window Action Button - Top Right Corner -->
@@ -86,11 +88,6 @@
           </div>
         </div>
       </div>
-
-      <hr class="nav" />
-
-      <!-- Actions Sub-Section -->
-      <div id="actions"></div>
     </nav>
 
     <!-- Main Section -->
@@ -117,8 +114,9 @@
           <div id="main-content-post-left">
             <textarea id="body-showcase"></textarea>
             <div class="actions">
-              <div id="random-body-filler" class="button">Randomize</div>
-              <div id="validate-body" class="button">Validate</div>
+              <div id="random-body-filler" class="button" onclick="randomizeCurrentEntityBody()">Randomize</div>
+              <div id="validate-body" class="button disabled">Validate</div>
+              <div id="reset-body" class="button" onclick="resetCurrentEntityBody()">Reset</div>
             </div>
           </div>
           <!-- Bodies Manager Container -->
@@ -126,20 +124,33 @@
             <!-- Save Body Section -->
             <div id="save-body-section">
               <div class="header">Save Body</div>
-              <input id="save-body-title-input" placeholder="Title" />
-              <div class="button" onclick="saveBody()">Save</div>
+              <input id="save-post-body-title-input" placeholder="Title" />
+              <div class="button" onclick="savePostBody()">Save</div>
             </div>
             <!-- Border -->
             <div class="hr"></div>
             <!-- Bodies List -->
             <div id="bodies-list">
               <div class="header">BODIES</div>
-              <div class="list" id="bodies-list-content"></div>
+              <div class="list" id="post-bodies-list-content"></div>
             </div>
           </div>
         </div>
       </div>
     </main>
+
+    <!-- Post Body Delete Dropdown -->
+    <div class="dropdown" id="post-body-dropdown" onmouseleave="postBodyDropdownHide()">
+      <!-- Dropdown Menu Option: Delete -->
+      <div class="option" data-action="delete" onclick="deletePostBody()">
+        <div class="icon" radius="true">
+          <img alt="icon" src="../static/trash-2.svg" />
+        </div>
+        <div class="text">
+          <p>Delete</p>
+        </div>
+      </div>
+    </div>
 
     <!-- Modal Overlay -->
     <div id="overlay"></div>
@@ -210,6 +221,12 @@
       </div>
     </div>
 
+    <!-- Splashscreen -->
+    <div id="splashscreen">
+      <img alt="Icon" id="main-placeholder-icon" class="placeholder-icon" src="../static/icon-placeholder.png" />
+    </div>
+
+    <script src="./lib/js/Variables.js"></script>
     <script src="./lib/js/helpers/codemirror-5.65.2/lib/codemirror.js"></script>
     <script src="./lib/js/helpers/codemirror-5.65.2/mode/javascript/javascript.js"></script>
     <script src="./lib/js/Main.js"></script>

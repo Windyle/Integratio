@@ -1,6 +1,6 @@
 #treeview {
   width: 90%;
-  height: 44%;
+  height: 90%;
   background-color: var(--darker-secondary);
   margin-top: 15px;
   overflow: hidden;
@@ -192,13 +192,11 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 140px;
-  height: 70px;
+  width: 250px;
   background-color: var(--primary);
   z-index: 5;
   display: flex;
   flex-direction: column;
-  border-radius: 0 10px 10px 10px;
 }
 
 #treeview-dropdown .option {
@@ -211,14 +209,12 @@
   cursor: pointer;
 }
 
-#treeview-dropdown .option:hover[data-action="edit"] {
+#treeview-dropdown .option:hover {
   background-color: var(--secondary);
-  border-top-right-radius: 10px;
 }
 
 #treeview-dropdown .option:hover[data-action="delete"] {
   background-color: var(--danger);
-  border-radius: 0 0 10px 10px;
 }
 
 #treeview-dropdown .option .icon {
@@ -229,10 +225,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-#treeview-dropdown .option .icon[radius="true"] {
-  border-bottom-left-radius: 10px;
 }
 
 #treeview-dropdown .option .icon img {

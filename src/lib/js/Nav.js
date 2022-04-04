@@ -8,53 +8,9 @@ const { ipcRenderer } = require("electron");
 
 // Action Buttons Declaration
 const actions = [
-  { id: "export-postman", text: "EXPORT FOR POSTMAN", onclick: "" },
-  { id: "export-structure", text: "EXPORT DATA STRUCTURE", onclick: "" },
+  { id: "export-postman", text: "Export to Postman", onclick: "", icon: "postman.svg" },
+  { id: "export-structure", text: "Export Data Structure", onclick: "", icon: "book.svg" },
 ];
-
-// Process Variables
-let current_instance;
-let current_entity;
-
-// Event Listener for Initialization
-document.addEventListener("DOMContentLoaded", init);
-
-// Initialize the nav
-async function init() {
-  // Initialize Actions Sub-Section
-  console.info("- Initialize Actions");
-
-  // Generate Buttons from actions array and append to actions section
-  actions.forEach((action) => {
-    let button = `<div id="${action.id}" class="button disabled" onclick="${action.onclick}">${action.text}</div>`;
-
-    document.getElementById("actions").innerHTML += button;
-  });
-
-  // Initialize Search Bar
-  console.info("- Initialize Search Bar");
-  document.getElementById("search-container").style.display = "none";
-
-  // Initialize Modals
-  console.info("- Initialize Modals");
-  document.getElementById("overlay").style.display = "none";
-  document.getElementById("new-instance-modal").style.display = "none";
-  document.getElementById("edit-instance-modal").style.display = "none";
-  document.getElementById("delete-instance-modal").style.display = "none";
-
-  // Initialize Loader
-  console.info("- Initialize Loader");
-  document.getElementById("loader-container").style.display = "none";
-
-  // Initialize Tree View Dropdown
-  console.info("- Initialize Tree View Dropdown");
-  document.getElementById("treeview-dropdown").style.display = "none";
-
-  // Initialize Tree View
-  showLoader();
-  loadTreeView(await s_instances.generateInstancesList());
-  showLoader();
-}
 
 // Window Actions Functions
 function closeWindow() {
@@ -138,20 +94,28 @@ function showLoader() {
 function treeviewDropdownShow(e) {
   // Check if user pressed right mouse button
   if (e.button == 2) {
-    // Show dropdown with Edit and Delete options
-    let dropdown = document.getElementById("treeview-dropdown");
-    dropdown.style.display = "flex";
-    dropdown.style.left = e.clientX + "px";
-    dropdown.style.top = e.clientY / 1.2 + "px";
-
     // Retrieve node element
     let element = e.target;
+
+    if (element.hasAttribute("id") && element.id.includes(".")) return;
 
     let nodeElement = element;
     // If nodeElement does not have an id then it's not a tree element, but a child of a tree element
     while (!nodeElement.hasAttribute("id")) {
       nodeElement = nodeElement.parentElement;
+      if (nodeElement.id.includes(".")) {
+        nodeElement = null;
+        return;
+      }
     }
+
+    if (nodeElement == null) return;
+
+    // Show dropdown with Edit and Delete options
+    let dropdown = document.getElementById("treeview-dropdown");
+    dropdown.style.display = "flex";
+    dropdown.style.left = e.clientX / 1.1 + "px";
+    dropdown.style.top = e.clientY / 1.5 + "px";
 
     // Set current instance
     setCurrentInstance(nodeElement.id);
@@ -169,9 +133,6 @@ function setCurrentInstance(instanceId) {
 
   // Get Instance Name
   let instanceName = document.getElementById(instanceId).children[0].children[1].innerText;
-
-  // Update instance display in header
-  document.getElementById("instance-display").innerHTML = instanceName;
 
   // Toggle expand for other instances
   let treeview = document.getElementById("treeview-content");
@@ -278,24 +239,26 @@ function loadTreeView(instances) {
 
 // Function: Expand / Collapse Tree View
 function expand(e) {
-  let element = e.target;
-  let parent = element.parentElement;
+  if (e.button == 0) {
+    let element = e.target;
+    let parent = element.parentElement;
 
-  let nodeElement = element;
-  // If nodeElement does not have an id then it's not a tree element, but a child of a tree element
-  while (!nodeElement.hasAttribute("id")) {
-    nodeElement = nodeElement.parentElement;
-  }
+    let nodeElement = element;
+    // If nodeElement does not have an id then it's not a tree element, but a child of a tree element
+    while (!nodeElement.hasAttribute("id")) {
+      nodeElement = nodeElement.parentElement;
+    }
 
-  // If element is an instance node then set current instance
-  if (nodeElement.classList.contains("root")) {
-    setCurrentInstance(nodeElement.id);
-  }
+    // If element is an instance node then set current instance
+    if (nodeElement.classList.contains("root")) {
+      setCurrentInstance(nodeElement.id);
+    }
 
-  // Children[0] is the chevron, Children[1-X] are the sub-elements
-  nodeElement.children[0].children[0].classList.toggle("expanded");
-  for (let i = 1; i < nodeElement.children.length; i++) {
-    nodeElement.children[i].classList.toggle("hide");
+    // Children[0] is the chevron, Children[1-X] are the sub-elements
+    nodeElement.children[0].children[0].classList.toggle("expanded");
+    for (let i = 1; i < nodeElement.children.length; i++) {
+      nodeElement.children[i].classList.toggle("hide");
+    }
   }
 }
 
@@ -404,16 +367,27 @@ function methodRoute(type, instanceId, packageId, entityId) {
     case "GET":
       break;
     case "POST":
-      if (document.getElementById("main-content-post").style.display == "grid" && entityId === current_entity) return;
+      if (document.getElementById("main-content-post").style.display == "grid" && entityId === current_entity_id)
+        return;
 
-      current_entity = entityId;
-      let entity = s_instances.getEntity(instanceId, packageId, entityId);
-      setUrlContainerValue(entity.name);
-      showPostContainer(s_instances.generateBlankBody(entity.columns));
+      current_entity_id = entityId;
+      current_entity = s_instances.getEntity(instanceId, packageId, entityId);
+      current_method_id = s_instances.getMethodId(instanceId, packageId, entityId, "POST");
+      setUrlContainerValue(current_entity.name);
+      showPostContainer(s_instances.generateBlankBody(current_entity.columns));
       break;
     case "PATCH":
       break;
     case "DELETE":
       break;
   }
+}
+
+// Create element from html for prepending actions
+function createElementFromHTML(htmlString) {
+  var div = document.createElement("div");
+  div.innerHTML = htmlString.trim();
+
+  // Change this to div.childNodes to support multiple top-level nodes.
+  return div.firstChild;
 }
