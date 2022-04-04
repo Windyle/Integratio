@@ -8,8 +8,8 @@ const { ipcRenderer } = require("electron");
 
 // Action Buttons Declaration
 const actions = [
-  { id: "export-postman", text: "EXPORT FOR POSTMAN", onclick: "" },
-  { id: "export-structure", text: "EXPORT DATA STRUCTURE", onclick: "" },
+  { id: "export-postman", text: "Export to Postman", onclick: "", icon: "postman.svg" },
+  { id: "export-structure", text: "Export Data Structure", onclick: "", icon: "book.svg" },
 ];
 
 // Event Listener for Initialization
@@ -22,9 +22,18 @@ async function init() {
 
   // Generate Buttons from actions array and append to actions section
   actions.forEach((action) => {
-    let button = `<div id="${action.id}" class="button disabled" onclick="${action.onclick}">${action.text}</div>`;
+    let button = createElementFromHTML(`
+    <div class="option" data-action="${action.id}" onclick="${action.onclick}">
+      <div class="icon">
+        <img alt="icon" src="../static/${action.icon}" />
+      </div>
+      <div class="text">
+        <p>${action.text}</p>
+      </div>
+    </div>
+    `);
 
-    document.getElementById("actions").innerHTML += button;
+    document.getElementById("treeview-dropdown").prepend(button);
   });
 
   // Initialize Search Bar
@@ -165,9 +174,6 @@ function setCurrentInstance(instanceId) {
 
   // Get Instance Name
   let instanceName = document.getElementById(instanceId).children[0].children[1].innerText;
-
-  // Update instance display in header
-  document.getElementById("instance-display").innerHTML = instanceName;
 
   // Toggle expand for other instances
   let treeview = document.getElementById("treeview-content");
@@ -413,4 +419,13 @@ function methodRoute(type, instanceId, packageId, entityId) {
     case "DELETE":
       break;
   }
+}
+
+// Create element from html for prepending actions
+function createElementFromHTML(htmlString) {
+  var div = document.createElement("div");
+  div.innerHTML = htmlString.trim();
+
+  // Change this to div.childNodes to support multiple top-level nodes.
+  return div.firstChild;
 }
