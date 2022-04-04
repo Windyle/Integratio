@@ -94,20 +94,28 @@ function showLoader() {
 function treeviewDropdownShow(e) {
   // Check if user pressed right mouse button
   if (e.button == 2) {
-    // Show dropdown with Edit and Delete options
-    let dropdown = document.getElementById("treeview-dropdown");
-    dropdown.style.display = "flex";
-    dropdown.style.left = e.clientX + "px";
-    dropdown.style.top = e.clientY / 1.2 + "px";
-
     // Retrieve node element
     let element = e.target;
+
+    if (element.hasAttribute("id") && element.id.includes(".")) return;
 
     let nodeElement = element;
     // If nodeElement does not have an id then it's not a tree element, but a child of a tree element
     while (!nodeElement.hasAttribute("id")) {
       nodeElement = nodeElement.parentElement;
+      if (nodeElement.id.includes(".")) {
+        nodeElement = null;
+        return;
+      }
     }
+
+    if (nodeElement == null) return;
+
+    // Show dropdown with Edit and Delete options
+    let dropdown = document.getElementById("treeview-dropdown");
+    dropdown.style.display = "flex";
+    dropdown.style.left = e.clientX + "px";
+    dropdown.style.top = e.clientY / 1.2 + "px";
 
     // Set current instance
     setCurrentInstance(nodeElement.id);
@@ -231,24 +239,26 @@ function loadTreeView(instances) {
 
 // Function: Expand / Collapse Tree View
 function expand(e) {
-  let element = e.target;
-  let parent = element.parentElement;
+  if (e.button == 0) {
+    let element = e.target;
+    let parent = element.parentElement;
 
-  let nodeElement = element;
-  // If nodeElement does not have an id then it's not a tree element, but a child of a tree element
-  while (!nodeElement.hasAttribute("id")) {
-    nodeElement = nodeElement.parentElement;
-  }
+    let nodeElement = element;
+    // If nodeElement does not have an id then it's not a tree element, but a child of a tree element
+    while (!nodeElement.hasAttribute("id")) {
+      nodeElement = nodeElement.parentElement;
+    }
 
-  // If element is an instance node then set current instance
-  if (nodeElement.classList.contains("root")) {
-    setCurrentInstance(nodeElement.id);
-  }
+    // If element is an instance node then set current instance
+    if (nodeElement.classList.contains("root")) {
+      setCurrentInstance(nodeElement.id);
+    }
 
-  // Children[0] is the chevron, Children[1-X] are the sub-elements
-  nodeElement.children[0].children[0].classList.toggle("expanded");
-  for (let i = 1; i < nodeElement.children.length; i++) {
-    nodeElement.children[i].classList.toggle("hide");
+    // Children[0] is the chevron, Children[1-X] are the sub-elements
+    nodeElement.children[0].children[0].classList.toggle("expanded");
+    for (let i = 1; i < nodeElement.children.length; i++) {
+      nodeElement.children[i].classList.toggle("hide");
+    }
   }
 }
 
