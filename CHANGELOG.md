@@ -17,9 +17,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Instance Treeview Generation
 - Post Request to Creatio with "blank" base url of the selected entity
   - Random Body Filler
-- Save Body list for the selected entity
+  - Body Reset
+  - Body local save for easier access
+  - Load saved body
 - Get Filters generator
-- Get Filters local save for easier access
+  - Filters local save for easier access
 - Populated lookup for picking inherited columns from metadata for the following objects:
   - Account
   - AccountIndustry
