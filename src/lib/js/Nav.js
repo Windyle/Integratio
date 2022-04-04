@@ -12,55 +12,6 @@ const actions = [
   { id: "export-structure", text: "Export Data Structure", onclick: "", icon: "book.svg" },
 ];
 
-// Event Listener for Initialization
-document.addEventListener("DOMContentLoaded", init);
-
-// Initialize the nav
-async function init() {
-  // Initialize Actions Sub-Section
-  console.info("- Initialize Actions");
-
-  // Generate Buttons from actions array and append to actions section
-  actions.forEach((action) => {
-    let button = createElementFromHTML(`
-    <div class="option" data-action="${action.id}" onclick="${action.onclick}">
-      <div class="icon">
-        <img alt="icon" src="../static/${action.icon}" />
-      </div>
-      <div class="text">
-        <p>${action.text}</p>
-      </div>
-    </div>
-    `);
-
-    document.getElementById("treeview-dropdown").prepend(button);
-  });
-
-  // Initialize Search Bar
-  console.info("- Initialize Search Bar");
-  document.getElementById("search-container").style.display = "none";
-
-  // Initialize Modals
-  console.info("- Initialize Modals");
-  document.getElementById("overlay").style.display = "none";
-  document.getElementById("new-instance-modal").style.display = "none";
-  document.getElementById("edit-instance-modal").style.display = "none";
-  document.getElementById("delete-instance-modal").style.display = "none";
-
-  // Initialize Loader
-  console.info("- Initialize Loader");
-  document.getElementById("loader-container").style.display = "none";
-
-  // Initialize Tree View Dropdown
-  console.info("- Initialize Tree View Dropdown");
-  document.getElementById("treeview-dropdown").style.display = "none";
-
-  // Initialize Tree View
-  showLoader();
-  loadTreeView(await s_instances.generateInstancesList());
-  showLoader();
-}
-
 // Window Actions Functions
 function closeWindow() {
   ipcRenderer.send("close-app");

@@ -10,7 +10,6 @@
     <link href="./lib/css/Header.css" rel="stylesheet" />
     <!-- Nav Stylesheets -->
     <link href="./lib/css/Nav.css" rel="stylesheet" />
-    <link href="./lib/css/Nav_Actions.css" rel="stylesheet" />
     <link href="./lib/css/Nav_Treeview.css" rel="stylesheet" />
     <link href="./lib/css/Nav_Search.css" rel="stylesheet" />
     <!-- Main Stylesheets -->
@@ -19,6 +18,8 @@
     <link href="./lib/css/Modal.css" rel="stylesheet" />
     <!-- Loader Stylesheet -->
     <link href="./lib/css/Loader.css" rel="stylesheet" />
+    <!-- Splashscreen Stylesheet -->
+    <link href="./lib/css/Splashscreen.css" rel="stylesheet" />
     <!-- CodeMirror Stylesheet -->
     <link rel="stylesheet" href="./lib/js/helpers/codemirror-5.65.2/lib/codemirror.css" />
     <link rel="stylesheet" href="./lib/js/helpers/codemirror-5.65.2/theme/dracula.css" />
@@ -114,7 +115,7 @@
             <div class="actions">
               <div id="random-body-filler" class="button" onclick="randomizeCurrentEntityBody()">Randomize</div>
               <div id="validate-body" class="button">Validate</div>
-              <div id="reset-body" class="button">Reset</div>
+              <div id="reset-body" class="button" onclick="resetCurrentEntityBody()">Reset</div>
             </div>
           </div>
           <!-- Bodies Manager Container -->
@@ -204,6 +205,11 @@
         <div></div>
         <div></div>
       </div>
+    </div>
+
+    <!-- Splashscreen -->
+    <div id="splashscreen">
+      <img alt="Icon" id="main-placeholder-icon" class="placeholder-icon" src="../static/icon-placeholder.png" />
     </div>
 
     <script src="./lib/js/Variables.js"></script>

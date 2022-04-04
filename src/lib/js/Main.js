@@ -7,12 +7,57 @@ const { randomizeValue } = require("./lib/js/helpers/Randomizer");
 document.addEventListener("DOMContentLoaded", init);
 
 // Initialize main content
-function init() {
+async function init() {
+  // Initialize Actions Sub-Section
+  console.info("- Initialize Actions");
+
+  // Generate Buttons from actions array and append to actions section
+  actions.forEach((action) => {
+    let button = createElementFromHTML(`
+    <div class="option" data-action="${action.id}" onclick="${action.onclick}">
+      <div class="icon">
+        <img alt="icon" src="../static/${action.icon}" />
+      </div>
+      <div class="text">
+        <p>${action.text}</p>
+      </div>
+    </div>
+    `);
+
+    document.getElementById("treeview-dropdown").prepend(button);
+  });
+
+  // Initialize Search Bar
+  console.info("- Initialize Search Bar");
+  document.getElementById("search-container").style.display = "none";
+
+  // Initialize Modals
+  console.info("- Initialize Modals");
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("new-instance-modal").style.display = "none";
+  document.getElementById("edit-instance-modal").style.display = "none";
+  document.getElementById("delete-instance-modal").style.display = "none";
+
+  // Initialize Loader
+  console.info("- Initialize Loader");
+  document.getElementById("loader-container").style.display = "none";
+
+  // Initialize Tree View Dropdown
+  console.info("- Initialize Tree View Dropdown");
+  document.getElementById("treeview-dropdown").style.display = "none";
+
+  // Initialize Tree View
+  loadTreeView(await s_instances.generateInstancesList());
+
   console.log("- Initialize Main Content");
   document.getElementById("url-container").style.display = "none";
   document.getElementById("main-content-container").style.display = "none";
   showPostContainer();
   showGetContainer();
+
+  setTimeout(() => {
+    document.getElementById("splashscreen").remove();
+  }, 2000);
 }
 
 // Function: Show Url Container
@@ -86,4 +131,9 @@ function randomizeCurrentEntityBody() {
   });
 
   editor.setValue(JSON.stringify(random_body, null, 2));
+}
+
+// Function: Reset Current Entity's Body to blank
+function resetCurrentEntityBody() {
+  editor.setValue(s_instances.generateBlankBody(current_entity.columns));
 }
