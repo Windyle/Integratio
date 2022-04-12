@@ -10,6 +10,8 @@ It's a faster way to look at your entities' structures and make random bodies fo
 You can find the changelog [here](https://github.com/Windyle/Integratio/blob/main/CHANGELOG.md).
 We don't have a proper roadmap but we'll write what we're working on in the Unreleased section of the changelog.
 
+You can also refer to our Trello board to follow the development: https://trello.com/b/yc077fT2/integratio
+
 ## Installation
 
 Waiting for the first release.
