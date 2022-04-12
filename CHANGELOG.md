@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+> __You can follow the development on Trello: https://trello.com/b/yc077fT2/integratio__
+
 ## [Unreleased] - yyyy-mm-dd
 
 ### Added
