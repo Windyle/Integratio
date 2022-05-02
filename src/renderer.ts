@@ -27,5 +27,8 @@
  */
 
 import './index.css';
+import './lib/css/header.css';
+import './lib/css/nav.css';
+import './lib/css/main.css';
 
 console.log('👋 This message is being logged by "renderer.js", included via webpack');
