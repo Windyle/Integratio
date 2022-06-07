@@ -1,7 +1,16 @@
-<script>
+<script lang="ts">
+	// Components
 	import Sidebar from '../components/Sidebar.svelte';
 	import Header from '../components/Header.svelte';
 	import Modal from '../components/Modal.svelte';
+
+	// Stores
+	import { modal } from '../stores';
+	let modalType: string = 'none';
+
+	modal.subscribe((value: any) => {
+		modalType = value;
+	});
 </script>
 
 <div class="container">
@@ -12,7 +21,9 @@
 	</main>
 </div>
 
-<Modal confirmButton={true} />
+{#if modalType !== 'none'}
+	<Modal type={modalType} />
+{/if}
 
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
@@ -25,11 +36,12 @@
 		--secondary: #ffa000;
 		--secondary-light: #ffd149;
 		--secondary-dark: #c67100;
-		--text-primary: #ffffff;
-		--text-secondary: #000000;
 		--background: rgb(221, 221, 221);
 		--background-light: #f1f1f1;
 		--background-dark: rgb(190, 190, 190);
+		--text-primary: #ffffff;
+		--text-secondary: #000000;
+		--text-background: #3b3b3b;
 	}
 
 	:global(body) {

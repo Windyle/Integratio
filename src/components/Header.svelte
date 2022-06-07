@@ -1,5 +1,13 @@
 <script lang="ts">
+	// Components
 	import Searchbar from './Searchbar.svelte';
+
+	// Stores
+	import { modal } from '../stores';
+
+	function openModal(type: string) {
+		modal.set(type);
+	}
 </script>
 
 <header>
@@ -10,7 +18,11 @@
 	<Searchbar />
 	<div class="r-btns">
 		<div class="r-btn" id="new-btn">
-			<img src="/icons/plus-circle.svg" alt="New Instance Button" />
+			<img
+				src="/icons/plus-circle.svg"
+				alt="New Instance Button"
+				on:click={() => openModal('new')}
+			/>
 		</div>
 		<div class="r-btn" id="help-btn">
 			<img src="/icons/help-circle.svg" alt="Help Button" />
