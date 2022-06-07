@@ -1,90 +1,34 @@
 {
-  "name": "integratio",
-  "productName": "integratio",
-  "version": "1.0.0",
-  "description": "Creatio utility tool for developers",
-  "main": ".webpack/main",
-  "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx .",
-    "prepare": "husky install",
-    "test": "echo \"No test specified\" && exit 0"
-  },
-  "keywords": [],
-  "author": {
-    "name": "Alberto Denti"
-  },
-  "license": "MIT",
-  "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "electron_boilerplate"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ],
-      "plugins": [
-        [
-          "@electron-forge/plugin-webpack",
-          {
-            "mainConfig": "./webpack.main.config.js",
-            "renderer": {
-              "config": "./webpack.renderer.config.js",
-              "entryPoints": [
-                {
-                  "html": "./src/index.html",
-                  "js": "./src/renderer.ts",
-                  "name": "main_window"
-                }
-              ]
-            }
-          }
-        ]
-      ]
-    }
-  },
-  "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.63",
-    "@electron-forge/maker-deb": "^6.0.0-beta.63",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
-    "@electron-forge/maker-zip": "^6.0.0-beta.63",
-    "@electron-forge/plugin-webpack": "^6.0.0-beta.63",
-    "@typescript-eslint/eslint-plugin": "^5.21.0",
-    "@typescript-eslint/parser": "^5.21.0",
-    "@vercel/webpack-asset-relocator-loader": "^1.7.0",
-    "css-loader": "^6.7.1",
-    "electron": "18.2.0",
-    "eslint": "^8.14.0",
-    "eslint-plugin-import": "^2.26.0",
-    "fork-ts-checker-webpack-plugin": "^6.5.2",
-    "husky": "^7.0.4",
-    "node-loader": "^2.0.0",
-    "style-loader": "^3.3.1",
-    "ts-loader": "^9.2.9",
-    "typescript": "~4.5.4"
-  },
-  "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
-  }
+	"name": "integratio",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "svelte-kit dev",
+		"build": "svelte-kit build",
+		"package": "svelte-kit package",
+		"preview": "svelte-kit preview",
+		"prepare": "svelte-kit sync",
+		"test": "playwright test",
+		"check": "svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check --plugin-search-dir=. . && eslint .",
+		"format": "prettier --write --plugin-search-dir=. ."
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.21.0",
+		"@sveltejs/adapter-auto": "next",
+		"@sveltejs/kit": "next",
+		"@typescript-eslint/eslint-plugin": "^5.10.1",
+		"@typescript-eslint/parser": "^5.10.1",
+		"eslint": "^8.12.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-svelte3": "^4.0.0",
+		"prettier": "^2.5.1",
+		"prettier-plugin-svelte": "^2.5.0",
+		"svelte": "^3.44.0",
+		"svelte-check": "^2.2.6",
+		"svelte-preprocess": "^4.10.1",
+		"tslib": "^2.3.1",
+		"typescript": "~4.6.2"
+	},
+	"type": "module"
 }
