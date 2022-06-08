@@ -8,6 +8,23 @@
 	function openModal(type: string) {
 		modal.set(type);
 	}
+
+	async function testEndpoint() {
+		let id = 'blblbl';
+		let url: string = `/services/new-instance`;
+
+		let request = await fetch(url, {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ id: 'plplpl' })
+		});
+
+		console.log(request);
+		console.log(await request.json());
+	}
 </script>
 
 <header>
@@ -20,7 +37,7 @@
 		<div class="r-btn" id="new-btn" on:click={() => openModal('new')}>
 			<img src="/icons/plus-circle.svg" alt="New Instance Button" />
 		</div>
-		<div class="r-btn" id="help-btn">
+		<div class="r-btn" id="help-btn" on:click={() => testEndpoint()}>
 			<img src="/icons/help-circle.svg" alt="Help Button" />
 		</div>
 	</div>
@@ -42,6 +59,8 @@
 		padding-left: 15px;
 		height: 100%;
 		width: 30%;
+		cursor: default;
+		user-select: none;
 	}
 
 	.logo > img {

@@ -19,6 +19,7 @@
 		display: flex;
 		align-items: center;
 	}
+
 	input {
 		background: var(--primary-light);
 		color: var(--text-primary);
@@ -50,6 +51,15 @@
 		border: none;
 		color: var(--text-primary);
 		background: var(--primary-dark);
+		cursor: pointer;
+	}
+
+	.search-btn:hover {
+		filter: brightness(80%);
+	}
+
+	.search-btn:active {
+		filter: brightness(60%);
 	}
 
 	.clear-btn {
