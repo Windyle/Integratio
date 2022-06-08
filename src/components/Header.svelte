@@ -12,17 +12,13 @@
 
 <header>
 	<div class="logo">
-		<img src="/icon.png" alt="logo" />
+		<img src="/favicon.png" alt="logo" />
 		<p>INTEGRATIO</p>
 	</div>
 	<Searchbar />
 	<div class="r-btns">
-		<div class="r-btn" id="new-btn">
-			<img
-				src="/icons/plus-circle.svg"
-				alt="New Instance Button"
-				on:click={() => openModal('new')}
-			/>
+		<div class="r-btn" id="new-btn" on:click={() => openModal('new')}>
+			<img src="/icons/plus-circle.svg" alt="New Instance Button" />
 		</div>
 		<div class="r-btn" id="help-btn">
 			<img src="/icons/help-circle.svg" alt="Help Button" />

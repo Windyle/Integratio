@@ -1,6 +1,15 @@
+<script lang="ts">
+	let searchText: string = '';
+</script>
+
 <div>
-	<input type="text" placeholder="&#x1F50E;&#xFE0E;" />
-	<button type="button">Search</button>
+	<input type="text" placeholder="&#x1F50E;&#xFE0E;" bind:value={searchText} />
+	<button class={searchText !== '' ? 'clear-btn' : 'clear-btn no-hover'} type="button">
+		{#if searchText !== ''}
+			<img src="/icons/x.svg" alt="Clear Search" />
+		{/if}
+	</button>
+	<button class="search-btn" type="button">Search</button>
 </div>
 
 <style>
@@ -18,7 +27,7 @@
 		border-bottom-left-radius: 4px;
 		padding: 0 15px;
 		height: 100%;
-		width: 90%;
+		width: 85%;
 		margin-right: 0;
 	}
 
@@ -30,7 +39,7 @@
 		outline: none;
 	}
 
-	button {
+	.search-btn {
 		height: 100%;
 		width: 70px;
 		margin-left: 0;
@@ -41,5 +50,30 @@
 		border: none;
 		color: var(--text-primary);
 		background: var(--primary-dark);
+	}
+
+	.clear-btn {
+		height: 100%;
+		width: 30px;
+		border: none;
+		background: var(--primary-light);
+		color: var(--text-primary);
+		border-radius: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.clear-btn.no-hover {
+		pointer-events: none;
+	}
+
+	.clear-btn:hover {
+		filter: brightness(90%);
+	}
+
+	.clear-btn > img {
+		filter: invert(100%);
+		height: 18px;
 	}
 </style>

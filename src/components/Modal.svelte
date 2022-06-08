@@ -66,9 +66,9 @@
 	</div>
 	<div class="modal-footer">
 		{#if confirmButton}
-			<button class="confirm" type="button">CONFIRM</button>
+			<button class="btn confirm" type="button">CONFIRM</button>
 		{/if}
-		<button class="cancel" type="button" on:click={() => closeModal()}>CANCEL</button>
+		<button class="btn cancel" type="button" on:click={() => closeModal()}>CANCEL</button>
 	</div>
 </div>
 
@@ -93,7 +93,7 @@
 		transform: translate(-50%, -50%);
 		width: 30%;
 		border-radius: 10px;
-		background: var(--background);
+		background: var(--background-light);
 		display: grid;
 		grid-template-columns: 1fr;
 		grid-template-rows: 65px 1fr 65px;
@@ -102,15 +102,15 @@
 	}
 
 	.large {
-		height: 80%;
+		height: 560px;
 	}
 
 	.medium {
-		height: 60%;
+		height: 460px;
 	}
 
 	.small {
-		height: 40%;
+		height: 360px;
 	}
 
 	/* Header */
@@ -141,11 +141,11 @@
 	}
 
 	.close-modal:hover {
-		background-color: #ffffff99;
+		background-color: #b9b9b999;
 	}
 
 	.close-modal:active {
-		background-color: #ffffff44;
+		background-color: #aaaaaa44;
 	}
 
 	/* Body */
@@ -231,14 +231,18 @@
 		border-top: 2px solid var(--background-dark);
 	}
 
-	.confirm {
-		background-color: var(--primary-light);
-		color: var(--text-primary);
+	.btn {
 		font-size: 11pt;
 		border: none;
 		width: 120px;
 		height: 40px;
 		border-radius: 5px;
+		cursor: pointer;
+	}
+
+	.confirm {
+		background-color: var(--primary-light);
+		color: var(--text-primary);
 	}
 
 	.confirm:hover {
@@ -254,11 +258,6 @@
 	.cancel {
 		background-color: var(--background-dark);
 		color: var(--text-secondary);
-		font-size: 11pt;
-		border: none;
-		width: 120px;
-		height: 40px;
-		border-radius: 5px;
 	}
 
 	.cancel:hover {
